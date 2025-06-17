@@ -57,7 +57,7 @@ function App() {
 
         <Route
           exact
-          path="/dashboard"
+          path="/"
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -65,7 +65,7 @@ function App() {
           }
         />
 
-        <Route exact path="/" element={<Login />} />
+        <Route exact path="/login" element={<Login />} />
         <Route exact path="/password-recover" element={<PasswordRecovery />} />
         <Route exact path="/user/register" element={<Register />} />
        
