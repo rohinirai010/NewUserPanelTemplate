@@ -63,7 +63,7 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
                 className={`p-2 rounded-full transition-colors  w-12 h-12 flex items-center justify-center cursor-pointer ${
                   activeItem === item.id
                     ? "bg-[#954cea] text-gray-200"
-                    : "text-gray-500 hover:bg-gray-100"
+                    : "text-gray-500 hover:bg-purple-100"
                 }`}
               >
                 <IconComponent className="w-6 h-6" />

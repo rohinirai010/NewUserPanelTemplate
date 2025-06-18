@@ -464,7 +464,7 @@ const Dashboard = () => {
                           <circle
                             cx={x}
                             cy={y}
-                            r="4"
+                            r="7"
                             fill="#a855f7"
                             stroke="white"
                             strokeWidth="2"
