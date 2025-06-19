@@ -93,7 +93,7 @@ const FormField = ({
           type={type}
           id={name}
           name={name}
-          className={`w-full px-4 py-2 border rounded-2xl ${
+          className={`w-full px-4 py-2 border rounded-2xl text-sm ${
             error ? "border-red-500" : "border-gray-300"
           }`}
           value={value}
@@ -133,7 +133,7 @@ const PasswordField = ({
           type={showPassword ? "text" : "password"}
           id={name}
           name={name}
-          className={`w-full px-4 py-2 border rounded-2xl ${
+          className={`w-full px-4 py-2 border rounded-2xl text-sm ${
             error ? "border-red-500" : "border-gray-300"
           }`}
           value={value}
@@ -191,7 +191,7 @@ const CaptchaField = ({
           type="text"
           name="captchaInput"
           placeholder="Enter CAPTCHA"
-          className={`px-4 py-2 border rounded-2xl w-full h-[48px] ${
+          className={`px-4 py-2 border rounded-2xl w-full h-[48px] text-sm ${
             error ? "border-red-500" : "border-gray-300"
           }`}
           value={value}
@@ -238,12 +238,12 @@ const SubmitButton = ({
       <button
         type="submit"
         disabled={isLoading || disabled}
-        className={`w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 px-6 rounded-2xl hover:from-blue-700 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-medium shadow-md hover:shadow-lg active:scale-[0.98] ${className}`}
+        className={`relative w-full overflow-hidden bg-gradient-to-r from-blue-600 via-blue-800 to-indigo-600 text-white py-3 px-8 rounded-2xl hover:from-indigo-700 hover:via-blue-600 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 font-semibold shadow-xl hover:shadow-2xl active:scale-[0.98] transform hover:-translate-y-1 before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/20 before:via-transparent before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700 before:skew-x-12 cursor-pointer ${className}`}
       >
         {isLoading ? (
           <div className="flex items-center justify-center">
             <svg
-              className="animate-spin h-5 w-5 mr-2"
+              className="animate-spin h-5 w-5 mr-3"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -262,10 +262,10 @@ const SubmitButton = ({
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {loadingText}
+            <span className="animate-pulse">{loadingText}</span>
           </div>
         ) : (
-          children
+          <span className="relative z-10">{children}</span>
         )}
       </button>
     );
@@ -307,7 +307,7 @@ export const InternationalPhoneInput = ({
         onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
-        inputClass={`!w-full !py-2 !pl-12 !pr-4 !rounded-2xl !border ${error ? '!border-red-500' : '!border-gray-300'} ${inputClass}`}
+        inputClass={`!w-full !py-2 !pl-12 !pr-4 !rounded-2xl !border !text-sm ${error ? '!border-red-500' : '!border-gray-300'} ${inputClass}`}
         dropdownClass="!z-50"
         enableSearch
         searchPlaceholder="Search country"
@@ -347,7 +347,7 @@ const SponsorField = ({
           type="text"
           id="sponsorId"
           name="sponsorId"
-          className={`w-full px-4 py-2 border rounded-2xl pr-12 ${
+          className={`w-full px-4 py-2 border rounded-2xl pr-12 text-sm ${
             error
               ? "border-red-500"
               : isVerified
@@ -549,7 +549,7 @@ const UsernameField = ({
         type="text"
         id="username"
         name="username"
-        className={`w-full px-4 py-2 border rounded-2xl ${
+        className={`w-full px-4 py-2 border rounded-2xl text-sm ${
           error
             ? "border-red-500"
             : usernameStatus === "available"

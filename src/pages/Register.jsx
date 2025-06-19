@@ -491,41 +491,53 @@ const Register = () => {
             sponsorName={sponsorName}
           />
 
-       {/* Position Selection */}
-<div className="mb-4">
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    Select Position <span className="text-red-500">*</span>
-  </label>
-  <div className="flex space-x-4">
-    <button
-      type="button"
-      className={`flex-1 py-2 px-4 rounded-2xl border-2 transition-all ${formData.position === 'left' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-300 hover:border-gray-400'}`}
-      onClick={() => handleChange({
-        target: {
-          name: 'position',
-          value: 'left'
-        }
-      })}
-    >
-      Left
-    </button>
-    <button
-      type="button"
-      className={`flex-1 py-2 px-4 rounded-2xl border-2 transition-all ${formData.position === 'right' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-300 hover:border-gray-400'}`}
-      onClick={() => handleChange({
-        target: {
-          name: 'position',
-          value: 'right'
-        }
-      })}
-    >
-      Right
-    </button>
-  </div>
-  {errors.position && (
-    <p className="text-red-500 text-xs mt-1">{errors.position}</p>
-  )}
-</div>
+          {/* Position Selection */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Select Position <span className="text-red-500">*</span>
+            </label>
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                className={`flex-1 py-2 px-4 text-sm rounded-2xl border-2 transition-all ${
+                  formData.position === "left"
+                    ? "border-purple-600 bg-purple-50 text-purple-700"
+                    : "border-gray-300 hover:border-gray-400"
+                }`}
+                onClick={() =>
+                  handleChange({
+                    target: {
+                      name: "position",
+                      value: "left",
+                    },
+                  })
+                }
+              >
+                Left
+              </button>
+              <button
+                type="button"
+                className={`flex-1 py-2 px-4 text-sm rounded-2xl border-2 transition-all ${
+                  formData.position === "right"
+                    ? "border-purple-600 bg-purple-50 text-purple-700"
+                    : "border-gray-300 hover:border-gray-400"
+                }`}
+                onClick={() =>
+                  handleChange({
+                    target: {
+                      name: "position",
+                      value: "right",
+                    },
+                  })
+                }
+              >
+                Right
+              </button>
+            </div>
+            {errors.position && (
+              <p className="text-red-500 text-xs mt-1">{errors.position}</p>
+            )}
+          </div>
         </div>
 
         {/* CAPTCHA */}
@@ -542,23 +554,25 @@ const Register = () => {
 
         {/* Terms and Conditions */}
         <div className="mb-6">
-          <div className="flex items-start">
-            <input
-              type="checkbox"
-              id="agreeToTerms"
-              name="agreeToTerms"
-              className="h-3 sm:h-4 w-3 sm:w-4 text-blue-600 mt-1"
-              checked={formData.agreeToTerms}
-              onChange={handleChange}
-            />
+          <div className="flex items-center ">
+            <div className="">
+              <input
+                type="checkbox"
+                id="agreeToTerms"
+                name="agreeToTerms"
+                className="peer h-5 w-5 text-purple-600  border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-all duration-200 cursor-pointer hover:border-purple-400"
+                checked={formData.agreeToTerms}
+                onChange={handleChange}
+              />
+            </div>
             <label
               htmlFor="agreeToTerms"
-              className="ml-2 text-[12px] sm:text-sm text-gray-700"
+              className="mt-1 ml-2 sm:ml-3 text-[11px] sm:text-sm text-gray-700 cursor-pointer leading-relaxed"
             >
               I agree to the{" "}
               <Link
                 to="/terms"
-                className="text-blue-600 hover:text-blue-800 underline"
+                className="text-purple-600 hover:text-purple-800 underline decoration-2 underline-offset-2 font-medium transition-colors duration-200"
                 target="_blank"
               >
                 Terms and Conditions
@@ -566,7 +580,7 @@ const Register = () => {
               and{" "}
               <Link
                 to="/privacy"
-                className="text-blue-600 hover:text-blue-800 underline"
+                className="text-purple-600 hover:text-purple-800 underline decoration-2 underline-offset-2 font-medium transition-colors duration-200"
                 target="_blank"
               >
                 Privacy Policy
@@ -574,7 +588,20 @@ const Register = () => {
             </label>
           </div>
           {errors.agreeToTerms && (
-            <p className="text-red-500 text-xs mt-1">{errors.agreeToTerms}</p>
+            <p className="text-red-500 text-xs mt-2 ml-1 flex items-center">
+              <svg
+                className="h-4 w-4 mr-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              {errors.agreeToTerms}
+            </p>
           )}
         </div>
 
