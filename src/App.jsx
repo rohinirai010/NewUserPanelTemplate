@@ -6,28 +6,31 @@ import ProtectedRoute from "../src/routes/ProtectedRoute";
 
 import "./css/style.css";
 
-import './i18n';
-
-
+import "./i18n";
 
 // User Side imports
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PasswordRecovery from "./pages/PasswordRecovery";
+import Welcome from "./pages/Welcome";
+import { loadUser } from "./ReduxStateManagement/user/slices/authSlice";
+import Home from "./pages/MainWebsitePages/Home";
 
 function App() {
-
   const location = useLocation();
   const dispatch = useDispatch();
-  
+
+  useEffect(() => {
+    // Check authentication when app loads
+    dispatch(loadUser());
+  }, [dispatch]);
 
   useEffect(() => {
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]); // triggered on route change
-
 
   return (
     <>
@@ -57,27 +60,18 @@ function App() {
 
         <Route
           exact
-          path="/"
+          path="/user/dashboard"
           element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <Dashboard />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
-
-        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/user/login" element={<Login />} />
         <Route exact path="/password-recover" element={<PasswordRecovery />} />
         <Route exact path="/user/register" element={<Register />} />
-       
-        {/* <Route exact path="/members-list" element={<MembersList />} />
-
-        <Route exact path="/edit-info" element={<EditMemberInfo />} />
-        <Route exact path="/edited-info" element={<MembersEditedSummary />} />
-        <Route exact path="/create-subadmin" element={<CreateSubAdmin />} />
-        <Route exact path="/kyc-history" element={<KycHistory />} />
-        <Route exact path="/add-qr" element={<AddQRCode />} />
-        <Route exact path="/deposit-history" element={<DepositHistory />} />
-        <Route exact path="/withdraw-history" element={<WithdrawalHistory />} /> */}
+        <Route exact path="/user/welcome" element={<Welcome />} />
       </Routes>
     </>
   );

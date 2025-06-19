@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadUser } from '../ReduxStateManagement/user/slices/authSlice';
 
 const PrivateRoute = ({ children }) => {
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => !!state.auth.token);
-  
-  if (!isAuthenticated) {
-    // Redirect to login if not authenticated
-    return <Navigate to="/" replace />;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await dispatch(loadUser()).unwrap();
+      } catch (error) {
+        console.log("Authentication check failed");
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    checkAuth();
+  }, [dispatch]);
+
+  if (loading) {
+    // Show a loading indicator while checking auth state
+    return <div>Loading...</div>;
   }
-  
-  return children;
+
+  return isAuthenticated ? children : <Navigate to="/user/login" />;
 };
 
 export default PrivateRoute;

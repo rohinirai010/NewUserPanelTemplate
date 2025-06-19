@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Wallet, DollarSign } from "lucide-react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [hoveredPoint, setHoveredPoint] = useState(null);
   const [hoveredPayout, setHoveredPayout] = useState(null);
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
+  const { user } = useSelector(state => state.auth);
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -21,14 +23,14 @@ const Dashboard = () => {
     setIsProfileExpanded(!isProfileExpanded);
   };
 
-  // Dummy data
+  // data
   const userData = {
-    name: "Rahul Dev Parth",
-    id: "INFO0123",
-    membershipPack: "Pack2",
-    personalPV: 100,
-    groupPV: 1500,
-    sponsor: "LANGLANG1",
+    name: user?.fullName || '',
+    id: user?.username || '',
+    membershipPack: user?.membershipPack || '',
+    personalPV: user?.personalPV || 0,
+    groupPV: user?.groupPV || 0,
+    sponsor: user?.sponsorId || '',
   };
 
   const statsData = {
@@ -236,693 +238,719 @@ const Dashboard = () => {
 
   return (
     <>
-    
-    <div className="w-[100%] flex h-screen bg-gray-50 ">
-      {/* Sidebar */}
-      <Sidebar
-        isExpanded={isExpanded}
-        setIsExpanded={setIsExpanded}
-        activeItem={activeItem}
-        setActiveItem={setActiveItem}
-      />
-
-      {/* Main Content */}
-      <div
-        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 pb-20 lg:pb-0 ${
-          isProfileExpanded ? "lg:w-[60%]" : "w-[80%] lg:w-[80%]"
-        }`}
-      >
-        {/* Header */}
-        <Header
-          toggleSidebar={toggleSidebar}
-          toggleProfilePanel={toggleProfilePanel}
+      <div className="w-[100%] flex h-screen bg-gray-50 ">
+        {/* Sidebar */}
+        <Sidebar
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+          activeItem={activeItem}
+          setActiveItem={setActiveItem}
         />
 
-        {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto px-4 py-2 relative lg:ml-20  ">
+        {/* Main Content */}
+        <div
+          className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 pb-20 lg:pb-0 ${
+            isProfileExpanded ? "lg:w-[60%]" : "w-[80%] lg:w-[80%]"
+          }`}
+        >
+          {/* Header */}
+          <Header
+            toggleSidebar={toggleSidebar}
+            toggleProfilePanel={toggleProfilePanel}
+          />
 
-          {/* Welcome message */}
-          <div className="pb-2">
-            <h2 className="block lg:hidden text-lg font-medium mb-1 mt-1">Dashboard</h2>
-            <p className="text-gray-600 text-[12px] tracking-wide">
-              Welcome {userData.name}
-            </p>
-          </div>
+          {/* Dashboard Content */}
+          <main className="flex-1 overflow-auto px-4 py-2 relative lg:ml-20  ">
+            {/* Welcome message */}
+            <div className="pb-2">
+              <h2 className="block lg:hidden text-lg font-medium mb-1 mt-1">
+                Dashboard
+              </h2>
+              <p className="text-gray-600 text-[12px] tracking-wide">
+                Welcome {userData.name}
+              </p>
+            </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-3 md:mb-4">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-white rounded-lg p-3 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[11px] font-medium text-gray-600 mb-1">
-                      {stat.label}
-                    </p>
-                    <p className="text-[15px] font-bold text-gray-900">
-                      {stat.value}
-                    </p>
-                  </div>
-                  <div
-                    className={`p-2 rounded-lg ${
-                      stat.color === "green"
-                        ? "bg-green-100"
-                        : stat.color === "blue"
-                        ? "bg-blue-100"
-                        : stat.color === "purple"
-                        ? "bg-purple-100"
-                        : "bg-teal-100"
-                    }`}
-                  >
-                    <stat.icon
-                      className={`${
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-3 md:mb-4">
+              {stats.map((stat, index) => (
+                <div key={index} className="bg-white rounded-lg p-3 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-[11px] font-medium text-gray-600 mb-1">
+                        {stat.label}
+                      </p>
+                      <p className="text-[15px] font-bold text-gray-900">
+                        {stat.value}
+                      </p>
+                    </div>
+                    <div
+                      className={`p-2 rounded-lg ${
                         stat.color === "green"
-                          ? "text-green-600"
+                          ? "bg-green-100"
                           : stat.color === "blue"
-                          ? "text-blue-600"
+                          ? "bg-blue-100"
                           : stat.color === "purple"
-                          ? "text-purple-600"
-                          : "text-teal-600"
-                      }`}
-                      size={24}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-5 mb-3 lg:mb-4">
-            {/* Joinings Chart */}
-            <div className="md:col-span-2 bg-white rounded-lg p-3 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[16px] font-semibold">Joinings</h3>
-                <div className="flex space-x-1 text-[13px]">
-                  {["Year", "Month", "Day"].map((period) => (
-                    <button
-                      key={period}
-                      onClick={() => setJoiningsPeriod(period)}
-                      className={`px-3 py-1 rounded ${
-                        joiningsPeriod === period
-                          ? "bg-gray-100 text-gray-900"
-                          : "text-gray-600 hover:bg-gray-50"
+                          ? "bg-purple-100"
+                          : "bg-teal-100"
                       }`}
                     >
-                      {period}
-                    </button>
+                      <stat.icon
+                        className={`${
+                          stat.color === "green"
+                            ? "text-green-600"
+                            : stat.color === "blue"
+                            ? "text-blue-600"
+                            : stat.color === "purple"
+                            ? "text-purple-600"
+                            : "text-teal-600"
+                        }`}
+                        size={24}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-5 mb-3 lg:mb-4">
+              {/* Joinings Chart */}
+              <div className="md:col-span-2 bg-white rounded-lg p-3 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-[16px] font-semibold">Joinings</h3>
+                  <div className="flex space-x-1 text-[13px]">
+                    {["Year", "Month", "Day"].map((period) => (
+                      <button
+                        key={period}
+                        onClick={() => setJoiningsPeriod(period)}
+                        className={`px-3 py-1 rounded ${
+                          joiningsPeriod === period
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                      >
+                        {period}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="h-64 relative">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 800 240"
+                    className="overflow-visible"
+                  >
+                    {/* Grid lines */}
+                    <defs>
+                      <pattern
+                        id="grid"
+                        width="80"
+                        height="40"
+                        patternUnits="userSpaceOnUse"
+                      >
+                        <path
+                          d="M 80 0 L 0 0 0 40"
+                          fill="none"
+                          stroke="#f3f4f6"
+                          strokeWidth="1"
+                        />
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+
+                    {/* Y-axis labels */}
+                    <text
+                      x="10"
+                      y="20"
+                      className="text-xs fill-gray-400"
+                      textAnchor="start"
+                    >
+                      2
+                    </text>
+                    <text
+                      x="10"
+                      y="100"
+                      className="text-xs fill-gray-400"
+                      textAnchor="start"
+                    >
+                      1
+                    </text>
+                    <text
+                      x="10"
+                      y="180"
+                      className="text-xs fill-gray-400"
+                      textAnchor="start"
+                    >
+                      0
+                    </text>
+
+                    {/* Chart area */}
+                    <g transform="translate(40, 20)">
+                      {/* Generate path for the curve */}
+                      <path
+                        d={(() => {
+                          const points = currentJoiningsData.map(
+                            (item, index) => {
+                              const x =
+                                (index / (currentJoiningsData.length - 1)) *
+                                720;
+                              const y =
+                                maxValue > 0
+                                  ? 160 - (item.value / maxValue) * 160
+                                  : 160;
+                              return [x, y];
+                            }
+                          );
+
+                          // Create smooth curve using quadratic bezier curves
+                          let path = `M ${points[0][0]} ${points[0][1]}`;
+                          for (let i = 1; i < points.length; i++) {
+                            const prevPoint = points[i - 1];
+                            const currentPoint = points[i];
+                            const controlX =
+                              prevPoint[0] +
+                              (currentPoint[0] - prevPoint[0]) * 0.5;
+                            path += ` Q ${controlX} ${prevPoint[1]} ${currentPoint[0]} ${currentPoint[1]}`;
+                          }
+                          return path;
+                        })()}
+                        fill="none"
+                        stroke="#a855f7"
+                        strokeWidth="3"
+                        className="drop-shadow-sm"
+                      />
+
+                      {/* Fill area under curve */}
+                      <path
+                        d={(() => {
+                          const points = currentJoiningsData.map(
+                            (item, index) => {
+                              const x =
+                                (index / (currentJoiningsData.length - 1)) *
+                                720;
+                              const y =
+                                maxValue > 0
+                                  ? 160 - (item.value / maxValue) * 160
+                                  : 160;
+                              return [x, y];
+                            }
+                          );
+
+                          let path = `M ${points[0][0]} 160 L ${points[0][0]} ${points[0][1]}`;
+                          for (let i = 1; i < points.length; i++) {
+                            const prevPoint = points[i - 1];
+                            const currentPoint = points[i];
+                            const controlX =
+                              prevPoint[0] +
+                              (currentPoint[0] - prevPoint[0]) * 0.5;
+                            path += ` Q ${controlX} ${prevPoint[1]} ${currentPoint[0]} ${currentPoint[1]}`;
+                          }
+                          path += ` L ${points[points.length - 1][0]} 160 Z`;
+                          return path;
+                        })()}
+                        fill="url(#gradient)"
+                        opacity="0.3"
+                      />
+
+                      {/* Data points and labels */}
+                      {currentJoiningsData.map((item, index) => {
+                        const x =
+                          (index / (currentJoiningsData.length - 1)) * 720;
+                        const y =
+                          maxValue > 0
+                            ? 160 - (item.value / maxValue) * 160
+                            : 160;
+
+                        return (
+                          <g key={index}>
+                            {/* Data point */}
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r="7"
+                              fill="#a855f7"
+                              stroke="white"
+                              strokeWidth="2"
+                              className="cursor-pointer hover:r-6 transition-all duration-200"
+                              onMouseEnter={() =>
+                                setHoveredPoint({
+                                  x: x,
+                                  y: y,
+                                  period: item.period,
+                                  value: item.value,
+                                })
+                              }
+                              onMouseLeave={() => setHoveredPoint(null)}
+                            />
+
+                            {/* Value label with background - only show for non-zero values */}
+                            {item.value > 0 && (
+                              <>
+                                <rect
+                                  x={x - 12}
+                                  y={y - 25}
+                                  width="24"
+                                  height="16"
+                                  fill="#7c3aed"
+                                  rx="8"
+                                />
+                                <text
+                                  x={x}
+                                  y={y - 15}
+                                  className="text-xs fill-white font-medium"
+                                  textAnchor="middle"
+                                  dominantBaseline="middle"
+                                >
+                                  {item.displayValue}
+                                </text>
+                              </>
+                            )}
+
+                            {/* X-axis label */}
+                            <text
+                              x={x}
+                              y="185"
+                              className="text-xs fill-gray-500"
+                              textAnchor="middle"
+                            >
+                              {item.period}
+                            </text>
+                          </g>
+                        );
+                      })}
+                    </g>
+
+                    {/* Gradient definition */}
+                    <defs>
+                      <linearGradient
+                        id="gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop
+                          offset="0%"
+                          stopColor="#a855f7"
+                          stopOpacity="0.8"
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="#a855f7"
+                          stopOpacity="0.1"
+                        />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+
+                  {/* Tooltip - Fixed positioning */}
+                  {hoveredPoint && (
+                    <div
+                      className="absolute bg-gray-800/90 text-white px-2 py-1 rounded-lg shadow-lg pointer-events-none z-10 text-[10px]"
+                      style={{
+                        left: `${(hoveredPoint.x / 720) * 100}%`,
+                        top: `${((hoveredPoint.y + 20) / 240) * 100}%`,
+                        transform: "translate(-50%, -100%)",
+                      }}
+                    >
+                      <div className="text-center">
+                        <div className="font-medium">{hoveredPoint.period}</div>
+                        <div className="text-purple-200">
+                          {hoveredPoint.value}
+                        </div>
+                      </div>
+                      {/* Tooltip arrow */}
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* New Members */}
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h3 className="text-[16px] font-semibold mb-3">New Members</h3>
+                <div className="space-y-3">
+                  {newMembers.map((member, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-red-400 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-medium">
+                            {member.avatar}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-[13px]">
+                            {member.name}
+                          </p>
+                          <p className="text-[11px] text-gray-500">
+                            {member.id}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-[11px] text-gray-500">
+                        {member.date}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
-              <div className="h-64 relative">
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 800 240"
-                  className="overflow-visible"
-                >
-                  {/* Grid lines */}
-                  <defs>
-                    <pattern
-                      id="grid"
-                      width="80"
-                      height="40"
-                      patternUnits="userSpaceOnUse"
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-5">
+              {/* Team Performance */}
+              <div className="md:col-span-2 bg-white rounded-lg p-3 shadow-sm">
+                <h3 className="text-[16px] font-semibold mb-3">
+                  Team Performance
+                </h3>
+
+                <div className="flex space-x-4 mb-4">
+                  {Object.keys(teamPerformanceData).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setPerformanceTab(tab)}
+                      className={`text-[12px] font-medium ${
+                        performanceTab === tab
+                          ? "text-purple-600 border-b-2 border-purple-600"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
                     >
-                      <path
-                        d="M 80 0 L 0 0 0 40"
-                        fill="none"
-                        stroke="#f3f4f6"
-                        strokeWidth="1"
-                      />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  {teamPerformanceData[performanceTab].map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-7 h-7 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-medium">
+                            {item.avatar}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-[13px]">{item.name}</p>
+                          <p className="text-[11px] text-gray-500">{item.id}</p>
+                        </div>
+                      </div>
+                      <span className="text-green-600 font-medium text-[13px]">
+                        {item.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-                  {/* Y-axis labels */}
-                  <text
-                    x="10"
-                    y="20"
-                    className="text-xs fill-gray-400"
-                    textAnchor="start"
-                  >
-                    2
-                  </text>
-                  <text
-                    x="10"
-                    y="100"
-                    className="text-xs fill-gray-400"
-                    textAnchor="start"
-                  >
-                    1
-                  </text>
-                  <text
-                    x="10"
-                    y="180"
-                    className="text-xs fill-gray-400"
-                    textAnchor="start"
-                  >
-                    0
-                  </text>
+              {/* Earnings and Expenses */}
+              <div className="bg-white rounded-lg p-3 shadow-sm">
+                <h3 className="text-[16px] font-semibold mb-3">
+                  Earning & Expenses
+                </h3>
+                <div className="flex space-x-4 mb-4">
+                  {Object.keys(earningsExpensesData).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setEarningsTab(tab)}
+                      className={`text-[12px] font-medium ${
+                        earningsTab === tab
+                          ? "text-purple-600 border-b-2 border-purple-600"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  {earningsExpensesData[earningsTab].map((item, index) => (
+                    <div key={index} className="flex justify-between">
+                      <span className="text-gray-600 text-sm">
+                        {item.label}
+                      </span>
+                      <span
+                        className={`font-medium text-sm ${
+                          earningsTab === "Earnings"
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
+                        {item.amount}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </main>
 
-                  {/* Chart area */}
-                  <g transform="translate(40, 20)">
-                    {/* Generate path for the curve */}
-                    <path
-                      d={(() => {
-                        const points = currentJoiningsData.map(
-                          (item, index) => {
-                            const x =
-                              (index / (currentJoiningsData.length - 1)) * 720;
-                            const y =
-                              maxValue > 0
-                                ? 160 - (item.value / maxValue) * 160
-                                : 160;
-                            return [x, y];
-                          }
-                        );
+          {/* Footer */}
+          <footer className="hidden lg:block bg-white border-t p-4 text-center lg:ml-24">
+            <p className="text-sm text-gray-500">
+              Copyright @ All right reserved. 2025
+            </p>
+          </footer>
+        </div>
 
-                        // Create smooth curve using quadratic bezier curves
-                        let path = `M ${points[0][0]} ${points[0][1]}`;
-                        for (let i = 1; i < points.length; i++) {
-                          const prevPoint = points[i - 1];
-                          const currentPoint = points[i];
-                          const controlX =
-                            prevPoint[0] +
-                            (currentPoint[0] - prevPoint[0]) * 0.5;
-                          path += ` Q ${controlX} ${prevPoint[1]} ${currentPoint[0]} ${currentPoint[1]}`;
-                        }
-                        return path;
-                      })()}
+        {/* Right Profile Panel */}
+        <div
+          className={`fixed lg:relative top-0 right-0 h-full bg-white shadow-lg z-50 transition-all duration-300 ${
+            isProfileExpanded
+              ? "w-[85%] sm:w-[60%] md:w-[40%] lg:w-[20%] translate-x-0"
+              : "w-[85%] sm:w-[60%] md:w-[40%] lg:w-[20%] translate-x-full lg:translate-x-0"
+          } ${isProfileExpanded ? "lg:block" : "lg:block"}`}
+        >
+          {/* Close button for mobile/tablet */}
+          <button
+            onClick={toggleProfilePanel}
+            className="lg:hidden absolute top-4 left-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 z-50"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          <div className="px-4 py-6 h-full overflow-y-auto">
+            {/* User Profile Card */}
+            <div className="pb-4 border-b">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full mx-auto mb-2 flex items-center justify-center">
+                  <span className="text-white font-semibold">
+                    {userData.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </span>
+                </div>
+                <h4 className="font-semibold">{userData.name}</h4>
+                <p className="text-sm text-gray-500">{userData.id}</p>
+                <p className="text-xs text-gray-500">
+                  Membership {userData.membershipPack}
+                </p>
+              </div>
+              <div className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-0 lg:gap-4 xl:gap-0 text-center text-sm">
+                <div>
+                  <p className="text-[12px] text-gray-500">Personal PV</p>
+                  <p className="text-[11px] font-semibold">
+                    {userData.personalPV}
+                  </p>
+                </div>
+                <div className="block lg:hidden xl:block">|</div>
+                <div>
+                  <p className="text-[12px] text-gray-500">Group PV</p>
+                  <p className="text-[11px] font-semibold">
+                    {userData.groupPV}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-3 text-center">
+                <p className="text-gray-500 text-[13px]">Sponsor</p>
+                <p className="text-[13px] font-semibold">{userData.sponsor}</p>
+              </div>
+            </div>
+
+            {/* Payout Overview */}
+            <div className="pt-4">
+              <h3 className="text-[15px] font-semibold mb-2">
+                PAYOUT OVERVIEW
+              </h3>
+
+              <div className="flex justify-center mb-2 relative">
+                <div className="relative w-36 h-36">
+                  <svg className="w-36 h-36" viewBox="0 0 144 144">
+                    {/* Background circle */}
+                    <circle
+                      cx="72"
+                      cy="72"
+                      r="60"
+                      stroke="#f3f4f6"
+                      strokeWidth="12"
                       fill="none"
-                      stroke="#a855f7"
-                      strokeWidth="3"
-                      className="drop-shadow-sm"
                     />
-
-                    {/* Fill area under curve */}
-                    <path
-                      d={(() => {
-                        const points = currentJoiningsData.map(
-                          (item, index) => {
-                            const x =
-                              (index / (currentJoiningsData.length - 1)) * 720;
-                            const y =
-                              maxValue > 0
-                                ? 160 - (item.value / maxValue) * 160
-                                : 160;
-                            return [x, y];
-                          }
-                        );
-
-                        let path = `M ${points[0][0]} 160 L ${points[0][0]} ${points[0][1]}`;
-                        for (let i = 1; i < points.length; i++) {
-                          const prevPoint = points[i - 1];
-                          const currentPoint = points[i];
-                          const controlX =
-                            prevPoint[0] +
-                            (currentPoint[0] - prevPoint[0]) * 0.5;
-                          path += ` Q ${controlX} ${prevPoint[1]} ${currentPoint[0]} ${currentPoint[1]}`;
-                        }
-                        path += ` L ${points[points.length - 1][0]} 160 Z`;
-                        return path;
-                      })()}
-                      fill="url(#gradient)"
-                      opacity="0.3"
+                    {/* Paid circle (green) */}
+                    <circle
+                      cx="72"
+                      cy="72"
+                      r="60"
+                      stroke="#10b981"
+                      strokeWidth="12"
+                      fill="none"
+                      strokeDasharray={paidStrokeDasharray}
+                      strokeDashoffset={paidStrokeDashoffset}
+                      strokeLinecap="round"
+                      className="cursor-pointer transition-all duration-200"
+                      style={{ pointerEvents: "all" }}
+                      onMouseEnter={() =>
+                        setHoveredPayout({
+                          type: "Paid",
+                          value: payoutData.paid,
+                          percentage: paidPercentage.toFixed(1),
+                        })
+                      }
+                      onMouseLeave={() => setHoveredPayout(null)}
+                      transform="rotate(-90 72 72)"
                     />
+                    {/* Requested/Pending circle (blue) */}
+                    <circle
+                      cx="72"
+                      cy="72"
+                      r="60"
+                      stroke="#3b82f6"
+                      strokeWidth="12"
+                      fill="none"
+                      strokeDasharray={requestedStrokeDasharray}
+                      strokeDashoffset={requestedStrokeDashoffset}
+                      strokeLinecap="round"
+                      className="cursor-pointer transition-all duration-200"
+                      style={{ pointerEvents: "all" }}
+                      transform={`rotate(${
+                        (paidPercentage / 100) * 360 - 90
+                      } 72 72)`}
+                      onMouseEnter={() =>
+                        setHoveredPayout({
+                          type: "Pending",
+                          value: payoutData.requested,
+                          percentage: requestedPercentage.toFixed(1),
+                        })
+                      }
+                      onMouseLeave={() => setHoveredPayout(null)}
+                    />
+                  </svg>
 
-                    {/* Data points and labels */}
-                    {currentJoiningsData.map((item, index) => {
-                      const x =
-                        (index / (currentJoiningsData.length - 1)) * 720;
-                      const y =
-                        maxValue > 0
-                          ? 160 - (item.value / maxValue) * 160
-                          : 160;
+                  {/* Center content */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="text-center">
+                      <div className="text-xs text-gray-500 mb-1">
+                        {hoveredPayout ? hoveredPayout.type : "Total"}
+                      </div>
+                      <div className="text-xl font-bold">
+                        $
+                        {hoveredPayout
+                          ? hoveredPayout.value.toFixed(2)
+                          : totalPayout.toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                      return (
-                        <g key={index}>
-                          {/* Data point */}
-                          <circle
-                            cx={x}
-                            cy={y}
-                            r="7"
-                            fill="#a855f7"
-                            stroke="white"
-                            strokeWidth="2"
-                            className="cursor-pointer hover:r-6 transition-all duration-200"
-                            onMouseEnter={() =>
-                              setHoveredPoint({
-                                x: x,
-                                y: y,
-                                period: item.period,
-                                value: item.value,
-                              })
-                            }
-                            onMouseLeave={() => setHoveredPoint(null)}
-                          />
-
-                          {/* Value label with background - only show for non-zero values */}
-                          {item.value > 0 && (
-                            <>
-                              <rect
-                                x={x - 12}
-                                y={y - 25}
-                                width="24"
-                                height="16"
-                                fill="#7c3aed"
-                                rx="8"
-                              />
-                              <text
-                                x={x}
-                                y={y - 15}
-                                className="text-xs fill-white font-medium"
-                                textAnchor="middle"
-                                dominantBaseline="middle"
-                              >
-                                {item.displayValue}
-                              </text>
-                            </>
-                          )}
-
-                          {/* X-axis label */}
-                          <text
-                            x={x}
-                            y="185"
-                            className="text-xs fill-gray-500"
-                            textAnchor="middle"
-                          >
-                            {item.period}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </g>
-
-                  {/* Gradient definition */}
-                  <defs>
-                    <linearGradient
-                      id="gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="0%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#a855f7" stopOpacity="0.8" />
-                      <stop
-                        offset="100%"
-                        stopColor="#a855f7"
-                        stopOpacity="0.1"
-                      />
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                {/* Tooltip - Fixed positioning */}
-                {hoveredPoint && (
+                {/* Tooltip */}
+                {hoveredPayout && (
                   <div
-                    className="absolute bg-gray-800/90 text-white px-2 py-1 rounded-lg shadow-lg pointer-events-none z-10 text-[10px]"
+                    className="absolute bg-gray-800 text-white px-2 py-1 rounded-lg shadow-lg pointer-events-none text-[12px]"
                     style={{
-                      left: `${(hoveredPoint.x / 720) * 100}%`,
-                      top: `${((hoveredPoint.y + 20) / 240) * 100}%`,
-                      transform: "translate(-50%, -100%)",
+                      top: "-60px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      zIndex: 1000,
+                      whiteSpace: "nowrap",
                     }}
                   >
                     <div className="text-center">
-                      <div className="font-medium">{hoveredPoint.period}</div>
-                      <div className="text-purple-200">
-                        {hoveredPoint.value}
+                      <div className="font-medium">{hoveredPayout.type}</div>
+                      <div
+                        className={
+                          hoveredPayout.type === "Paid"
+                            ? "text-green-300"
+                            : "text-blue-300"
+                        }
+                      >
+                        ${hoveredPayout.value} ({hoveredPayout.percentage}%)
                       </div>
                     </div>
                     {/* Tooltip arrow */}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                    <div
+                      className="absolute w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"
+                      style={{
+                        top: "100%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                      }}
+                    ></div>
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* New Members */}
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="text-[16px] font-semibold mb-3">New Members</h3>
-              <div className="space-y-3">
-                {newMembers.map((member, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-red-400 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-medium">
-                          {member.avatar}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium text-[13px]">{member.name}</p>
-                        <p className="text-[11px] text-gray-500">{member.id}</p>
-                      </div>
-                    </div>
-                    <span className="text-[11px] text-gray-500">
-                      {member.date}
-                    </span>
-                  </div>
-                ))}
+              <div className="text-center mb-4">
+                <h4 className="font-semibold text-lg">Payout</h4>
               </div>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-5">
-            {/* Team Performance */}
-            <div className="md:col-span-2 bg-white rounded-lg p-3 shadow-sm">
-              <h3 className="text-[16px] font-semibold mb-3">
-                Team Performance
-              </h3>
-
-              <div className="flex space-x-4 mb-4">
-                {Object.keys(teamPerformanceData).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setPerformanceTab(tab)}
-                    className={`text-[12px] font-medium ${
-                      performanceTab === tab
-                        ? "text-purple-600 border-b-2 border-purple-600"
-                        : "text-gray-500 hover:text-gray-700"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-              <div className="space-y-3">
-                {teamPerformanceData[performanceTab].map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-7 h-7 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-medium">
-                          {item.avatar}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium text-[13px]">{item.name}</p>
-                        <p className="text-[11px] text-gray-500">{item.id}</p>
-                      </div>
-                    </div>
-                    <span className="text-green-600 font-medium text-[13px]">
-                      {item.value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Earnings and Expenses */}
-            <div className="bg-white rounded-lg p-3 shadow-sm">
-              <h3 className="text-[16px] font-semibold mb-3">
-                Earning & Expenses
-              </h3>
-              <div className="flex space-x-4 mb-4">
-                {Object.keys(earningsExpensesData).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setEarningsTab(tab)}
-                    className={`text-[12px] font-medium ${
-                      earningsTab === tab
-                        ? "text-purple-600 border-b-2 border-purple-600"
-                        : "text-gray-500 hover:text-gray-700"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-              <div className="space-y-3">
-                {earningsExpensesData[earningsTab].map((item, index) => (
-                  <div key={index} className="flex justify-between">
-                    <span className="text-gray-600 text-sm">{item.label}</span>
-                    <span
-                      className={`font-medium text-sm ${
-                        earningsTab === "Earnings"
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }`}
-                    >
-                      {item.amount}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </main>
-
-        {/* Footer */}
-        <footer className="hidden lg:block bg-white border-t p-4 text-center lg:ml-24">
-          <p className="text-sm text-gray-500">
-            Copyright @ All right reserved. 2025
-          </p>
-        </footer>
-      </div>
-
-      {/* Right Profile Panel */}
-      <div
-        className={`fixed lg:relative top-0 right-0 h-full bg-white shadow-lg z-50 transition-all duration-300 ${
-          isProfileExpanded
-            ? "w-[85%] sm:w-[60%] md:w-[40%] lg:w-[20%] translate-x-0"
-            : "w-[85%] sm:w-[60%] md:w-[40%] lg:w-[20%] translate-x-full lg:translate-x-0"
-        } ${isProfileExpanded ? "lg:block" : "lg:block"}`}
-      >
-        {/* Close button for mobile/tablet */}
-        <button
-          onClick={toggleProfilePanel}
-          className="lg:hidden absolute top-4 left-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 z-50"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-
-        <div className="px-4 py-6 h-full overflow-y-auto">
-          {/* User Profile Card */}
-          <div className="pb-4 border-b">
-            <div className="text-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full mx-auto mb-2 flex items-center justify-center">
-                <span className="text-white font-semibold">
-                  {userData.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </span>
-              </div>
-              <h4 className="font-semibold">{userData.name}</h4>
-              <p className="text-sm text-gray-500">{userData.id}</p>
-              <p className="text-xs text-gray-500">
-                Membership {userData.membershipPack}
-              </p>
-            </div>
-            <div className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-0 lg:gap-4 xl:gap-0 text-center text-sm">
-              <div>
-                <p className="text-[12px] text-gray-500">Personal PV</p>
-                <p className="text-[11px] font-semibold">{userData.personalPV}</p>
-              </div>
-              <div className="block lg:hidden xl:block">|</div>
-              <div>
-                <p className="text-[12px] text-gray-500">Group PV</p>
-                <p className="text-[11px] font-semibold">{userData.groupPV}</p>
-              </div>
-            </div>
-            <div className="mt-3 text-center">
-              <p className="text-gray-500 text-[13px]">Sponsor</p>
-              <p className="text-[13px] font-semibold">{userData.sponsor}</p>
-            </div>
-          </div>
-
-          {/* Payout Overview */}
-          <div className="pt-4">
-            <h3 className="text-[15px] font-semibold mb-2">PAYOUT OVERVIEW</h3>
-
-            <div className="flex justify-center mb-2 relative">
-              <div className="relative w-36 h-36">
-                <svg className="w-36 h-36" viewBox="0 0 144 144">
-                  {/* Background circle */}
-                  <circle
-                    cx="72"
-                    cy="72"
-                    r="60"
-                    stroke="#f3f4f6"
-                    strokeWidth="12"
-                    fill="none"
-                  />
-                  {/* Paid circle (green) */}
-                  <circle
-                    cx="72"
-                    cy="72"
-                    r="60"
-                    stroke="#10b981"
-                    strokeWidth="12"
-                    fill="none"
-                    strokeDasharray={paidStrokeDasharray}
-                    strokeDashoffset={paidStrokeDashoffset}
-                    strokeLinecap="round"
-                    className="cursor-pointer transition-all duration-200"
-                    style={{ pointerEvents: "all" }}
-                    onMouseEnter={() =>
-                      setHoveredPayout({
-                        type: "Paid",
-                        value: payoutData.paid,
-                        percentage: paidPercentage.toFixed(1),
-                      })
-                    }
-                    onMouseLeave={() => setHoveredPayout(null)}
-                    transform="rotate(-90 72 72)"
-                  />
-                  {/* Requested/Pending circle (blue) */}
-                  <circle
-                    cx="72"
-                    cy="72"
-                    r="60"
-                    stroke="#3b82f6"
-                    strokeWidth="12"
-                    fill="none"
-                    strokeDasharray={requestedStrokeDasharray}
-                    strokeDashoffset={requestedStrokeDashoffset}
-                    strokeLinecap="round"
-                    className="cursor-pointer transition-all duration-200"
-                    style={{ pointerEvents: "all" }}
-                    transform={`rotate(${
-                      (paidPercentage / 100) * 360 - 90
-                    } 72 72)`}
-                    onMouseEnter={() =>
-                      setHoveredPayout({
-                        type: "Pending",
-                        value: payoutData.requested,
-                        percentage: requestedPercentage.toFixed(1),
-                      })
-                    }
-                    onMouseLeave={() => setHoveredPayout(null)}
-                  />
-                </svg>
-
-                {/* Center content */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="text-center">
-                    <div className="text-xs text-gray-500 mb-1">
-                      {hoveredPayout ? hoveredPayout.type : "Total"}
-                    </div>
-                    <div className="text-xl font-bold">
-                      $
-                      {hoveredPayout
-                        ? hoveredPayout.value.toFixed(2)
-                        : totalPayout.toFixed(2)}
-                    </div>
-                  </div>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
+                  <span className="text-sm flex items-center">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                    Requested
+                  </span>
+                  <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs">
+                    ${payoutData.requested}
+                  </span>
                 </div>
-              </div>
-
-              {/* Tooltip */}
-              {hoveredPayout && (
-                <div
-                  className="absolute bg-gray-800 text-white px-2 py-1 rounded-lg shadow-lg pointer-events-none text-[12px]"
-                  style={{
-                    top: "-60px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    zIndex: 1000,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <div className="text-center">
-                    <div className="font-medium">{hoveredPayout.type}</div>
-                    <div
-                      className={
-                        hoveredPayout.type === "Paid"
-                          ? "text-green-300"
-                          : "text-blue-300"
-                      }
-                    >
-                      ${hoveredPayout.value} ({hoveredPayout.percentage}%)
-                    </div>
-                  </div>
-                  {/* Tooltip arrow */}
-                  <div
-                    className="absolute w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"
-                    style={{
-                      top: "100%",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                    }}
-                  ></div>
+                <div className="flex justify-between items-center p-2">
+                  <span className="text-sm">Approved</span>
+                  <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs">
+                    ${payoutData.approved}
+                  </span>
                 </div>
-              )}
-            </div>
-
-            <div className="text-center mb-4">
-              <h4 className="font-semibold text-lg">Payout</h4>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
-                <span className="text-sm flex items-center">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                  Requested
-                </span>
-                <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs">
-                  ${payoutData.requested}
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-2">
-                <span className="text-sm">Approved</span>
-                <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs">
-                  ${payoutData.approved}
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-green-50 rounded">
-                <span className="text-sm flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  Paid
-                </span>
-                <span className="bg-green-600 text-white px-2 py-1 rounded text-xs">
-                  ${payoutData.paid}
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-2">
-                <span className="text-sm">Rejected</span>
-                <span className="bg-red-600 text-white px-2 py-1 rounded text-xs">
-                  ${payoutData.rejected}
-                </span>
+                <div className="flex justify-between items-center p-2 bg-green-50 rounded">
+                  <span className="text-sm flex items-center">
+                    <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                    Paid
+                  </span>
+                  <span className="bg-green-600 text-white px-2 py-1 rounded text-xs">
+                    ${payoutData.paid}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center p-2">
+                  <span className="text-sm">Rejected</span>
+                  <span className="bg-red-600 text-white px-2 py-1 rounded text-xs">
+                    ${payoutData.rejected}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Add overlay for mobile when profile panel is open */}
+        {isProfileExpanded && (
+          <div
+            className="fixed inset-0 bg-black/80 bg-opacity-50 z-30 lg:hidden"
+            onClick={toggleProfilePanel}
+          ></div>
+        )}
       </div>
-      
-      {/* Add overlay for mobile when profile panel is open */}
-      {isProfileExpanded && (
-        <div
-          className="fixed inset-0 bg-black/80 bg-opacity-50 z-30 lg:hidden"
-          onClick={toggleProfilePanel}
-        ></div>
-      )}
-
-
-    </div>
-    <button
-  onClick={toggleProfilePanel}
-  className="lg:hidden fixed z-40 bottom-20 right-6 p-2 rounded-full bg-blue-200/50 hover:bg-gray-100"
->
-  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-  </svg>
-</button>
+      <button
+        onClick={toggleProfilePanel}
+        className="lg:hidden fixed z-40 bottom-20 right-6 p-2 rounded-full bg-blue-200/50 hover:bg-gray-100"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          />
+        </svg>
+      </button>
     </>
   );
 };

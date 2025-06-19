@@ -1,9 +1,19 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Mail, Bell, ChevronDown, Menu, X, User, LogOut } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../ReduxStateManagement/user/slices/authSlice"
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ toggleSidebar, name = "Rahul Dev parth" }) => {
+const Header = ({ toggleSidebar }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  // Get user data from Redux store
+  const { user } = useSelector((state) => state.auth);
+  const name = user?.fullName || "User";
+  const username = user?.username || "INFO0000";
 
   // Sample notifications data
   const notifications = [
@@ -51,15 +61,20 @@ const Header = ({ toggleSidebar, name = "Rahul Dev parth" }) => {
   };
 
   const handleLogout = () => {
-    // Add your logout logic here
-    console.log("Logging out...");
-    alert("Logged out successfully!");
+    dispatch(logoutUser())
+      .unwrap()
+      .then(() => {
+        // Redirect to login page after successful logout
+        navigate("/user/login");
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
   };
 
   const handleProfile = () => {
-    // Add your profile navigation logic here
-    console.log("Navigating to profile...");
-    alert("Navigating to profile page...");
+    // Navigate to profile page
+    navigate("/user/profile");
   };
 
   return (
@@ -201,7 +216,7 @@ const Header = ({ toggleSidebar, name = "Rahul Dev parth" }) => {
                     <div>
                       <p className="font-medium text-gray-900 text-[13px] sm:text-[14px]">{name}</p>
                       <p className="text-[11px] sm:text-[13px] text-gray-500">
-                      INFO0123
+                        {username}
                       </p>
                     </div>
                   </div>
@@ -227,7 +242,6 @@ const Header = ({ toggleSidebar, name = "Rahul Dev parth" }) => {
           </div>
         </div>
       </div>
-
     </header>
   );
 };
