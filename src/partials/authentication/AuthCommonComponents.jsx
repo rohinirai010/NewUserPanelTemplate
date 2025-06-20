@@ -36,12 +36,12 @@ const FormLayout = ({
       <div
         className={`bg-white rounded-2xl shadow-lg w-full ${maxWidth} px-5 py-5 sm:px-8 sm:py-4 border border-gray-100`}
       >
-        <div className="flex justify-center ">
-          <img src={logo} alt="Logo" className="w-48 h-18" />
+        <div className="flex justify-center mb-2">
+          <img src={logo} alt="Logo" className="w-36 h-16" />
         </div>
 
         {title && (
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          <h2 className="text-[22px] font-bold text-center text-gray-800 mb-6">
             {title}
           </h2>
         )}
