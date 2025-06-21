@@ -7,6 +7,7 @@ import {
   User,
   RotateCcw,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Node Component
 const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
@@ -64,6 +65,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
     const handleAddClick = (e, position) => {
       e.stopPropagation();
       onAddNode(position);
+      
     };
   
     if (!node) {
@@ -238,7 +240,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
                 ) : (
                   <button
                     onClick={(e) => handleAddClick(e, "left")}
-                    className="w-18 h-18 border-3 border-dashed border-purple-400 rounded-full flex items-center justify-center hover:border-purple-600 hover:bg-purple-50 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                    className="w-18 h-18 border-3 border-dashed border-purple-400 rounded-full flex items-center justify-center hover:border-purple-600 hover:bg-purple-50 transition-all duration-300 group shadow-lg hover:shadow-xl cursor-pointer"
                   >
                     <Plus className="w-10 h-10 text-purple-500 group-hover:text-purple-700" />
                   </button>
@@ -257,7 +259,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
                 ) : (
                   <button
                     onClick={(e) => handleAddClick(e, "right")}
-                    className="w-18 h-18 border-3 border-dashed border-purple-400 rounded-full flex items-center justify-center hover:border-purple-600 hover:bg-purple-50 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                    className="w-18 h-18 border-3 border-dashed border-purple-400 rounded-full flex items-center justify-center hover:border-purple-600 hover:bg-purple-50 transition-all duration-300 group shadow-lg hover:shadow-xl cursor-pointer"
                   >
                     <Plus className="w-10 h-10 text-purple-500 group-hover:text-purple-700" />
                   </button>
@@ -270,7 +272,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
         {/* Collapse indicator */}
         {node.children && node.children.length > 0 && node.collapsed && (
           <div className="mt-3">
-            <div className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full border">
+            <div className="text-sm text-gray-800 bg-gray-100 px-3 py-1 rounded-full border-2">
               ... {node.childrenCount} more
             </div>
           </div>
@@ -281,6 +283,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
   
   // Genealogy Tree Component
  export const GenealogyTree = () => {
+  const navigate = useNavigate();
     const [zoomLevel, setZoomLevel] = useState(60);
     const [treeData, setTreeData] = useState({
       id: "INF00123",
@@ -449,6 +452,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
     const handleAddNode = (position) => {
       // Navigate to register page
       console.log("Adding node at position:", position);
+      navigate("/user/register");
     };
   
     const handleToggleCollapse = (nodeId) => {
