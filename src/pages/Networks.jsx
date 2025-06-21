@@ -88,7 +88,7 @@ const NetworksPage = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                    className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold transition-colors ${
                       activeTab === tab.id
                         ? "bg-purple-600 text-white"
                         : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -100,23 +100,26 @@ const NetworksPage = () => {
               </div>
 
               {/* Search Section */}
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-row items-center space-x-2">
+                <div className="flex flex-row gap-2">
+
                 <div className="relative">
                   <input
                     type="text"
                     placeholder="Search network..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 pr-4 py-1.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs w-60"
+                    className="pl-7 sm:pl-9 pr-2 sm:pr-4 py-0.5 sm:py-1.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-[11px] sm:text-xs w-36 sm:w-60"
                   />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3  sm:w-4 h-3 sm:h-4" />
                 </div>
                 <button
                   onClick={handleSearch}
-                  className="px-3 py-1.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors text-xs font-semibold"
+                  className="px-3 py-0.5 sm:py-1.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors text-xs font-semibold"
                 >
                   Search
                 </button>
+                </div>
                 <button
                   onClick={handleReset}
                   className="px-3 py-1.5 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-xs font-semibold"

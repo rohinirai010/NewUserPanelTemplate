@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "../../commonStyle.css"
 
 import {
   Maximize,
@@ -30,8 +31,8 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
             const nodeRect = nodeRef.current.getBoundingClientRect();
             const nodeCenter = nodeRect.left + nodeRect.width / 2;
             
-            let leftPos = -60; // Default position for left child
-            let rightPos = 60; // Default position for right child
+            let leftPos = -40; // Default position for left child
+            let rightPos = 40; // Default position for right child
             
             // Adjust positions based on actual child elements if they exist
             if (leftChildRef.current && hasLeftChild) {
@@ -112,7 +113,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
   
           {/* Info Card */}
           {isHovered && (
-            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-2xl border-2 border-gray-100 p-4 z-50 w-72 backdrop-blur-sm">
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-2xl border-2 border-gray-100 p-4 z-50 w-64 sm:w-72 max-w-[90vw] backdrop-blur-sm">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="w-11 h-11 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
                   <User className="w-6 h-6 text-white" />
@@ -479,7 +480,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
         {/* Tree Container */}
         <div
           id="tree-container"
-          className="flex-1 overflow-auto p-4 rounded-xl bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50"
+          className="flex-1 overflow-x-auto overflow-y-auto p-4 rounded-xl bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50"
         >
           <div className="flex flex-row items-center justify-end space-x-2 mb-4">
             <button
@@ -513,7 +514,7 @@ const TreeNode = ({ node, onAddNode, onToggleCollapse, level = 0 }) => {
             </button>
           </div>
           <div
-            className="flex justify-center items-start min-h-full"
+            className="flex justify-start sm:justify-center items-start min-h-full  min-w-full px-4 smallPosition"
             style={{
               transform: `scale(${zoomLevel / 100})`,
               transformOrigin: "top center",
