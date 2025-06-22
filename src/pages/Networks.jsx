@@ -100,7 +100,7 @@ const NetworksPage = () => {
               </div>
 
               {/* Search Section */}
-              <div className="flex flex-row items-center space-x-2">
+              {/* <div className="flex flex-row items-center space-x-2">
                 <div className="flex flex-row gap-2">
 
                 <div className="relative">
@@ -126,12 +126,12 @@ const NetworksPage = () => {
                 >
                   Reset
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* Tab Content */}
-          <div className="flex-1 overflow-hidden">{renderTabContent()}</div>
+          <div className="flex-1 overflow-hidden mb-[5rem]">{renderTabContent()}</div>
         </main>
 
         {/* Footer */}
