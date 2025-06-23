@@ -207,7 +207,7 @@ const PlusCircleNode = ({ data }) => {
 };
 
 // Custom Controls Component
-const CustomControls = ({ isLocked, onToggleLock, onFullscreen }) => {
+export const CustomControls = ({ isLocked, onToggleLock, onFullscreen }) => {
   const { zoomIn, zoomOut, fitView, getZoom } = useReactFlow();
   const [currentZoom, setCurrentZoom] = useState(50);
 
@@ -871,65 +871,3 @@ export const GenealogyTree = () => {
     </div>
   );
 };
-
-// const handleZoomIn = () => {
-//   setZoomLevel((prev) => Math.min(prev + 10, 200));
-// };
-
-// const handleZoomOut = () => {
-//   setZoomLevel((prev) => Math.max(prev - 10, 50));
-// };
-
-// const handleRefresh = () => {
-//   setZoomLevel(100);
-//   const { nodes: refreshedNodes, edges: refreshedEdges } = convertToReactFlowElements(
-//     treeData,
-//     handleAddNode,
-//     handleToggleCollapse
-//   );
-//   setNodes(refreshedNodes);
-//   setEdges(refreshedEdges);
-// };
-
-// const handleFullscreen = () => {
-//   const element = document.getElementById("tree-container");
-//   if (element && element.requestFullscreen) {
-//     element.requestFullscreen();
-//   }
-// };
-
-{
-  /* <div className="absolute top-4 right-4 flex items-center space-x-2 z-10">
-          <button
-            onClick={handleZoomOut}
-            className="p-2 rounded-xl bg-white hover:bg-gray-100 border-2 border-gray-200 transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer"
-            title="Zoom Out"
-          >
-            <Minus className="w-4 h-4 text-gray-600" />
-          </button>
-          <span className="text-sm font-bold px-3 py-2 bg-white rounded-xl border-2 border-gray-200 shadow-md">
-            {zoomLevel}%
-          </span>
-          <button
-            onClick={handleZoomIn}
-            className="p-2 rounded-xl bg-white hover:bg-gray-100 border-2 border-gray-200 transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer"
-            title="Zoom In"
-          >
-            <Plus className="w-4 h-4 text-gray-600" />
-          </button>
-          <button
-            onClick={handleRefresh}
-            className="p-2 rounded-xl bg-white hover:bg-gray-100 border-2 border-gray-200 transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer"
-            title="Refresh"
-          >
-            <RotateCcw className="w-4 h-4 text-gray-600" />
-          </button>
-          <button
-            onClick={handleFullscreen}
-            className="p-2 rounded-xl bg-white hover:bg-gray-100 border-2 border-gray-200 transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer"
-            title="Fullscreen"
-          >
-            <Maximize className="w-4 h-4 text-gray-600" />
-          </button>
-        </div> */
-}

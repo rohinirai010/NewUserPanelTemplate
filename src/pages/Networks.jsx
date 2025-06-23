@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Search } from "lucide-react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import { useSelector } from "react-redux";
-import  {GenealogyTree} from "../partials/networks/NetworksPageReusableComponents";
+import { GenealogyTree } from "../partials/networks/NetworksPageReusableComponents";
+import { SponsorTree } from "../partials/networks/SponsorTree";
+import { TreeViewPage } from "../partials/networks/TreeViewPage";
+// import { DownlineMembersPage } from "../partials/networks/DownlineMembersPage";
 
 // Main Networks Page
 const NetworksPage = () => {
@@ -38,6 +40,12 @@ const NetworksPage = () => {
     switch (activeTab) {
       case "genealogy":
         return <GenealogyTree />;
+      case "sponsor":
+        return <SponsorTree />;
+      case "tree-view":
+        return <TreeViewPage />
+    //   case "downline":
+    //     return <DownlineMembersPage />
       default:
         return (
           <div className="bg-white rounded-lg shadow-sm h-full flex items-center justify-center">
@@ -131,7 +139,9 @@ const NetworksPage = () => {
           </div>
 
           {/* Tab Content */}
-          <div className="flex-1 overflow-hidden mb-[5rem]">{renderTabContent()}</div>
+          <div className="flex-1 overflow-hidden mb-[5rem]">
+            {renderTabContent()}
+          </div>
         </main>
 
         {/* Footer */}
