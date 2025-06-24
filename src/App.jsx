@@ -17,6 +17,7 @@ import Welcome from "./pages/Welcome";
 import { loadUser } from "./ReduxStateManagement/user/slices/authSlice";
 import Home from "./pages/MainWebsitePages/Home";
 import NetworksPage from "./pages/Networks";
+// import PayoutPage from "./pages/PayoutPage";
 
 function App() {
   const location = useLocation();
@@ -74,6 +75,7 @@ function App() {
         <Route exact path="/user/register" element={<Register />} />
         <Route exact path="/user/welcome" element={<Welcome />} />
         <Route exact path="/user/networks" element={<NetworksPage />} />
+        {/* <Route exact path="/user/payout" element={<PayoutPage />} /> */}
       </Routes>
     </>
   );

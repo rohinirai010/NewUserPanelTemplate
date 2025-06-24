@@ -3,11 +3,11 @@ import { User, Filter } from "lucide-react";
 import { DataTable } from "../../components/BinarySoftwareCommonComponents/DataTable";
 
 //  Downline Members Page
-export const DownlineMembersPage = () => {
+export const ReferralMembersPage = () => {
   const [levelFilter, setLevelFilter] = useState("");
 
   // Sample data for downline members
-  const sampleDownlineData = [
+  const sampleReferralData = [
     {
       id: 1,
       memberName: "David Andrade",
@@ -175,8 +175,8 @@ export const DownlineMembersPage = () => {
 
   // Filter data by level
   const filteredData = useMemo(() => {
-    if (!levelFilter) return sampleDownlineData;
-    return sampleDownlineData.filter(
+    if (!levelFilter) return sampleReferralData;
+    return sampleReferralData.filter(
       (member) => member.level.toString() === levelFilter
     );
   }, [levelFilter]);
@@ -184,18 +184,18 @@ export const DownlineMembersPage = () => {
   // Calculate stats
   const stats = {
     totalDownlineMembers: filteredData.length,
-    totalLevels: Math.max(...sampleDownlineData.map((m) => m.level)),
+    totalLevels: Math.max(...sampleReferralData.map((m) => m.level)),
   };
 
   // Get unique levels for filter dropdown
   const uniqueLevels = [
-    ...new Set(sampleDownlineData.map((m) => m.level)),
+    ...new Set(sampleReferralData.map((m) => m.level)),
   ].sort((a, b) => a - b);
 
   // Export configuration for DataTable
   const exportConfig = {
-    filename: "downline-members",
-    title: "Downline Members Report",
+    filename: "referral-members",
+    title: "Referral Members Report",
     searchPlaceholder: "Search members..."
   };
 
@@ -205,41 +205,43 @@ export const DownlineMembersPage = () => {
         {/* Header */}
         <div className="mb-4 sm:mb-5">
           <h1 className="text-[18px] sm:text-xl font-bold text-gray-900 ">
-            Downline Members
+            Referral Members
           </h1>
           <p className="text-[13px] sm:text-[15px] text-gray-600">
-            Manage and view your downline network members
+            Manage and view your referral members.
           </p>
         </div>
 
         {/* Stats Cards and Level Filter */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-2 mb-3">
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 ">
-              <div className="flex flex-col items-center justify-center">
-                <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
-                  Total Members
-                </p>
-                <p className="text-[16px] sm:text-[22px] font-bold text-gray-900">
-                  {stats.totalDownlineMembers}
-                </p>
-              </div>
-            </div>
+            <div className="grid grid-cols-2 gap-2">
 
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 ">
-              <div className="flex flex-col items-center justify-center">
-                <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
-                  Total Levels
-                </p>
-                <p className="text-[16px] sm:text-[22px] font-bold text-gray-900">
-                  {stats.totalLevels}
-                </p>
-              </div>
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 ">
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
+                Total Referral Members
+              </p>
+              <p className="text-[16px] sm:text-[22px] font-bold text-gray-900">
+                {stats.totalDownlineMembers}
+              </p>
             </div>
           </div>
 
-          {/* Level Filter */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 px-3 py-2 ">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 ">
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
+                Total Levels
+              </p>
+              <p className="text-[16px] sm:text-[22px] font-bold text-gray-900">
+                {stats.totalLevels}
+              </p>
+            </div>
+          </div>
+            </div>
+
+         
+         {/* Level Filter */}
+         <div className="bg-white rounded-xl shadow-lg border border-gray-200 px-3 py-2 ">
             <div className="flex flex-col gap-2">
               <label className="text-[12px] sm:text-[13px] font-medium text-gray-600 flex items-center gap-2">
                 <Filter className="w-3 sm:w-4 h-3 sm:h-4" />
@@ -276,4 +278,4 @@ export const DownlineMembersPage = () => {
   );
 };
 
-export default DownlineMembersPage;
+export default ReferralMembersPage;

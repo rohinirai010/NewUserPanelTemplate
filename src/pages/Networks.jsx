@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 import { GenealogyTree } from "../partials/networks/NetworksPageReusableComponents";
 import { SponsorTree } from "../partials/networks/SponsorTree";
 import { TreeViewPage } from "../partials/networks/TreeViewPage";
-// import { DownlineMembersPage } from "../partials/networks/DownlineMembersPage";
+import { DownlineMembersPage } from "../partials/networks/DownlineMembersPage";
+import ReferralMembersPage from "../partials/networks/ReferralMembersPage";
 
 // Main Networks Page
 const NetworksPage = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("networks");
   const [activeTab, setActiveTab] = useState("genealogy");
-  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useSelector((state) => state.auth);
 
   const toggleSidebar = () => {
@@ -27,15 +27,6 @@ const NetworksPage = () => {
     { id: "referral", label: "Referral Members" },
   ];
 
-  const handleSearch = () => {
-    // Implement search functionality
-    console.log("Searching for:", searchQuery);
-  };
-
-  const handleReset = () => {
-    setSearchQuery("");
-  };
-
   const renderTabContent = () => {
     switch (activeTab) {
       case "genealogy":
@@ -43,9 +34,11 @@ const NetworksPage = () => {
       case "sponsor":
         return <SponsorTree />;
       case "tree-view":
-        return <TreeViewPage />
-    //   case "downline":
-    //     return <DownlineMembersPage />
+        return <TreeViewPage />;
+      case "downline":
+        return <DownlineMembersPage />;
+      case "referral":
+        return <ReferralMembersPage />
       default:
         return (
           <div className="bg-white rounded-lg shadow-sm h-full flex items-center justify-center">
@@ -106,35 +99,6 @@ const NetworksPage = () => {
                   </button>
                 ))}
               </div>
-
-              {/* Search Section */}
-              {/* <div className="flex flex-row items-center space-x-2">
-                <div className="flex flex-row gap-2">
-
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search network..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-7 sm:pl-9 pr-2 sm:pr-4 py-0.5 sm:py-1.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-[11px] sm:text-xs w-36 sm:w-60"
-                  />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3  sm:w-4 h-3 sm:h-4" />
-                </div>
-                <button
-                  onClick={handleSearch}
-                  className="px-3 py-0.5 sm:py-1.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors text-xs font-semibold"
-                >
-                  Search
-                </button>
-                </div>
-                <button
-                  onClick={handleReset}
-                  className="px-3 py-1.5 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-xs font-semibold"
-                >
-                  Reset
-                </button>
-              </div> */}
             </div>
           </div>
 

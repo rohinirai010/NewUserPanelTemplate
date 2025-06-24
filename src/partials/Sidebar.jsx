@@ -28,14 +28,14 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
       id: "networks", 
       hasDropdown: true,
       link: "/user/networks",
-      dropdownItems: [
-        { label: "My Network", link: "/networks/my-network" },
-        { label: "Team Network", link: "/networks/team-network" }
-      ]
+      // dropdownItems: [
+      //   { label: "My Network", link: "/networks/my-network" },
+      //   { label: "Team Network", link: "/networks/team-network" }
+      // ]
     },
     { icon: UserPlus, label: "Register", id: "register", link: "/register" },
     { icon: Wallet, label: "E-Wallet", id: "ewallet", link: "/ewallet" },
-    { icon: DollarSign, label: "Payout", id: "payout", link: "/payout" },
+    { icon: DollarSign, label: "Payout", id: "payout", link: "/user/payout" },
     { icon: Zap, label: "E-pin", id: "epin", link: "/epin" },
     { icon: ShoppingCart, label: "Shopping", id: "shopping", link: "/shopping" },
     { 

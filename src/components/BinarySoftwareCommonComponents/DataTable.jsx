@@ -27,7 +27,6 @@ const loadJsPDF = () => {
   });
 };
 
-
 // Reusable DataTable Component
 export const DataTable = ({
   data,
@@ -36,7 +35,13 @@ export const DataTable = ({
   exportable = true,
   selectable = true,
   className = "",
-  maxHeight = "400px", // for controlling table height
+  maxHeight = "400px",
+  // New props for export configuration
+  exportConfig = {
+    filename: "data-export",
+    title: "Data Report",
+    searchPlaceholder: "Search..."
+  }
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState("");
@@ -46,6 +51,13 @@ export const DataTable = ({
   const [selectedRows, setSelectedRows] = useState(new Set());
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [filters, setFilters] = useState({});
+
+  // Extract export configuration with defaults
+  const {
+    filename = "data-export",
+    title = "Data Report",
+    searchPlaceholder = "Search..."
+  } = exportConfig;
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -135,7 +147,7 @@ export const DataTable = ({
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "downline-members.csv";
+      a.download = `${filename}.csv`;
       a.click();
       window.URL.revokeObjectURL(url);
     } else if (format === "excel") {
@@ -149,7 +161,7 @@ export const DataTable = ({
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "downline-members.xls";
+      a.download = `${filename}.xls`;
       a.click();
       window.URL.revokeObjectURL(url);
     } else if (format === "pdf") {
@@ -159,7 +171,7 @@ export const DataTable = ({
 
         // Add title
         doc.setFontSize(16);
-        doc.text("Downline Members Report", 20, 20);
+        doc.text(title, 20, 20);
 
         // Add date
         doc.setFontSize(10);
@@ -181,22 +193,18 @@ export const DataTable = ({
         const pageHeight = doc.internal.pageSize.height;
         const margin = 20;
         const rowHeight = 8;
-        const columnWidths = [50, 35, 35, 35, 20]; // Adjust based on content
+        
+        // Dynamic column widths based on number of columns
+        const availableWidth = doc.internal.pageSize.width - 2 * margin;
+        const columnWidths = columns.map(() => availableWidth / columns.length);
 
         // Table headers
         doc.setFontSize(9);
         doc.setFont(undefined, "bold");
-        const headers = [
-          "Member Name",
-          "Member ID",
-          "Placement",
-          "Sponsor",
-          "Level",
-        ];
         let xPosition = margin;
 
-        headers.forEach((header, index) => {
-          doc.text(header, xPosition, yPosition);
+        columns.forEach((column, index) => {
+          doc.text(column.header, xPosition, yPosition);
           xPosition += columnWidths[index];
         });
 
@@ -218,26 +226,19 @@ export const DataTable = ({
           }
 
           xPosition = margin;
-          const rowData = [
-            item.memberName,
-            item.memberId,
-            item.placement,
-            item.sponsor,
-            item.level.toString(),
-          ];
-
-          rowData.forEach((data, colIndex) => {
+          columns.forEach((column, colIndex) => {
+            const cellValue = String(item[column.key] || "");
             // Truncate text if too long
             const maxWidth = columnWidths[colIndex] - 2;
             const text =
-              doc.getTextWidth(data) > maxWidth
-                ? data.substring(
+              doc.getTextWidth(cellValue) > maxWidth
+                ? cellValue.substring(
                     0,
                     Math.floor(
-                      (data.length * maxWidth) / doc.getTextWidth(data)
+                      (cellValue.length * maxWidth) / doc.getTextWidth(cellValue)
                     )
                   ) + "..."
-                : data;
+                : cellValue;
             doc.text(text, xPosition, yPosition);
             xPosition += columnWidths[colIndex];
           });
@@ -246,7 +247,7 @@ export const DataTable = ({
         });
 
         // Save the PDF
-        doc.save("downline-members.pdf");
+        doc.save(`${filename}.pdf`);
       } catch (error) {
         console.error("Error generating PDF:", error);
         alert("Error generating PDF. Please try again.");
@@ -269,7 +270,7 @@ export const DataTable = ({
               <Search className="absolute left-1.5 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 sm:w-4 h-3 sm:h-4" />
               <input
                 type="text"
-                placeholder="Search members..."
+                placeholder={searchPlaceholder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-6 sm:pl-10 pr-4 py-0.5 sm:py-1.5 text-[12px] sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -344,7 +345,7 @@ export const DataTable = ({
           <thead className="bg-gray-50 sticky top-0 z-10 shadow-sm">
             <tr>
               {selectable && (
-                <th className="w-12 px-2 sm:px-4 py-3 whitespace-nowrap bg-gray-50">
+                <th className="w-12 px-2 sm:px-4 py-[9px] whitespace-nowrap bg-gray-50">
                   <input
                     type="checkbox"
                     checked={
@@ -359,11 +360,11 @@ export const DataTable = ({
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="px-2 sm:px-4 py-3 text-left whitespace-nowrap bg-gray-50"
+                  className="px-2 sm:px-4 py-[9px]  text-left whitespace-nowrap bg-gray-50"
                 >
                   <button
                     onClick={() => handleSort(column.key)}
-                    className="flex items-center gap-2 text-xs font-medium text-gray-700 uppercase tracking-wider hover:text-gray-900 transition-colors"
+                    className="flex items-center gap-2 text-xs font-semibold text-gray-700 uppercase tracking-wider hover:text-gray-900 transition-colors"
                   >
                     {column.header}
                     {sortField === column.key ? (
@@ -387,7 +388,7 @@ export const DataTable = ({
                 className="hover:bg-gray-50 transition-colors"
               >
                 {selectable && (
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-4 py-[6px]  whitespace-nowrap">
                     <input
                       type="checkbox"
                       checked={selectedRows.has(item.id)}
@@ -399,7 +400,7 @@ export const DataTable = ({
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    className="px-2 sm:px-4 py-2 text-[12px] text-gray-900 whitespace-nowrap"
+                    className="px-2 sm:px-4 py-[6px]  text-[12px] text-gray-900 whitespace-nowrap"
                   >
                     {column.render
                       ? column.render(item[column.key], item)
@@ -476,4 +477,3 @@ export const DataTable = ({
     </div>
   );
 };
-

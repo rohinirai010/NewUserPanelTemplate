@@ -847,9 +847,3 @@ export const SponsorTree = () => {
 };
 
 export default SponsorTree;
-
-// if i am adding a new node or a child in this tree then why everything is overlapping with one another, also tell me that is this overlapping and all is based on the id of the nodes
-
-// if indeed it is using this then this is only dummy data i am using in this , the id or userid not necessarily be this only it can be anything like rohini010, hello123 etc etc, so then if position is based on this then it may create a problem , so instead use some other logic like a uniqueid and it will increement 1 by one and then may be it will not create a overlapping problem and all, also there should be no difficulty in this while connecting backend or api , like while creating database
-
-// just do this dont do any other changes
