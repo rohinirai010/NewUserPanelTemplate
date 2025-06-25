@@ -272,9 +272,9 @@ const Dashboard = () => {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-3 md:mb-4">
+            <div className="grid grid-cols-2  lg:grid-cols-4 gap-2 md:gap-6 mb-3 md:mb-4">
               {stats.map((stat, index) => (
-                <div key={index} className="bg-white rounded-lg p-3 shadow-sm">
+                <div key={index} className="bg-white rounded-lg p-2 sm:p-3 shadow-sm">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-[11px] font-medium text-gray-600 mb-1">
@@ -296,7 +296,7 @@ const Dashboard = () => {
                       }`}
                     >
                       <stat.icon
-                        className={`${
+                        className={`w-5 sm:w-6 h-5 sm:h-6 ${
                           stat.color === "green"
                             ? "text-green-600"
                             : stat.color === "blue"
@@ -305,7 +305,7 @@ const Dashboard = () => {
                             ? "text-purple-600"
                             : "text-teal-600"
                         }`}
-                        size={24}
+                        
                       />
                     </div>
                   </div>
@@ -607,12 +607,12 @@ const Dashboard = () => {
                   Team Performance
                 </h3>
 
-                <div className="flex space-x-4 mb-4">
+                <div className="flex space-x-2 sm:space-x-4 mb-4">
                   {Object.keys(teamPerformanceData).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setPerformanceTab(tab)}
-                      className={`text-[12px] font-medium ${
+                      className={`text-[11.8px] sm:text-[12px] font-medium ${
                         performanceTab === tab
                           ? "text-purple-600 border-b-2 border-purple-600"
                           : "text-gray-500 hover:text-gray-700"

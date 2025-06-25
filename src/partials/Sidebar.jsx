@@ -13,6 +13,8 @@ import {
   ChevronsRight,
   ChevronsLeft,
 } from "lucide-react";
+import sidebarLogo from "../images/AuthLogo.png";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
   const [dropdownStates, setDropdownStates] = useState({
@@ -26,17 +28,17 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
       icon: Network, 
       label: "Networks", 
       id: "networks", 
-      hasDropdown: true,
+      // hasDropdown: true,
       link: "/user/networks",
       // dropdownItems: [
       //   { label: "My Network", link: "/networks/my-network" },
       //   { label: "Team Network", link: "/networks/team-network" }
       // ]
     },
-    { icon: UserPlus, label: "Register", id: "register", link: "/register" },
-    { icon: Wallet, label: "E-Wallet", id: "ewallet", link: "/ewallet" },
+    { icon: UserPlus, label: "Register", id: "register", link: "/user/register" },
+    { icon: Wallet, label: "E-Wallet", id: "ewallet", link: "/user/e-wallet" },
     { icon: DollarSign, label: "Payout", id: "payout", link: "/user/payout" },
-    { icon: Zap, label: "E-pin", id: "epin", link: "/epin" },
+    { icon: Zap, label: "E-pin", id: "epin", link: "/user/e-pin" },
     { icon: ShoppingCart, label: "Shopping", id: "shopping", link: "/shopping" },
     { 
       icon: Settings, 
@@ -124,7 +126,7 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
               </a>
               
               {/* Tooltip */}
-              <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-400/30 text-[#000] text-[11px] px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-30">
+              <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-400/60 text-[#000] text-[11px] px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-30">
                 {item.label}
                 {/* Tooltip arrow */}
                 <div className="absolute -left-[5px] top-1/2 transform -translate-y-1/2 -translate-0-x-full w-0 h-0 border-t-5 border-b-5 border-r-5 border-transparent border-r-gray-800"></div>
@@ -183,12 +185,9 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
         >
           {/* Logo Header */}
           <div className="flex items-center justify-between px-4 pt-5 pb-3 border-b">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">L</span>
-              </div>
-              <span className="font-semibold text-lg">LOGO</span>
-            </div>
+          <Link to="/user/dashboard">
+                <img src={sidebarLogo} alt="Logo" className="w-20 h-10" />
+              </Link>
             <button
               onClick={() => setIsExpanded(false)}
               className="p-1 rounded-tl-xl rounded-br-xl text-gray-200 bg-gradient-to-br from-[#836fe8] hover:from-[#ac45cc] via-[#4228c5] to-[#ac45cc] hover:to-[#836fe8] hover:scale-105 flex items-center justify-center cursor-pointer"

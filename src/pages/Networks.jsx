@@ -71,11 +71,11 @@ const NetworksPage = () => {
         {/* Networks Content */}
         <main className="flex-1 overflow-hidden px-4 py-2 lg:ml-20">
           {/* Page Header */}
-          <div className="mb-4">
-            <h2 className="block lg:hidden text-lg font-medium mb-1 ">
+          <div className="mb-2 sm:mb-4">
+            <h2 className="block lg:hidden text-[16px] sm:text-lg font-medium  ">
               Networks
             </h2>
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 text-[12px]  sm:text-sm">
               Manage your network structure and relationships
             </p>
           </div>

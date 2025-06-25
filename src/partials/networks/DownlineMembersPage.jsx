@@ -200,14 +200,14 @@ export const DownlineMembersPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 sm:px-4 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl sm:px-2 py-1.5 sm:py-2">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-4 sm:mb-5">
-          <h1 className="text-[18px] sm:text-xl font-bold text-gray-900 ">
+          <h1 className="text-[17px] sm:text-xl font-bold text-gray-900 ">
             Downline Members
           </h1>
-          <p className="text-[13px] sm:text-[15px] text-gray-600">
+          <p className="text-[12px] sm:text-[15px] text-gray-600">
             Manage and view your downline network members
           </p>
         </div>
@@ -217,10 +217,10 @@ export const DownlineMembersPage = () => {
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 ">
               <div className="flex flex-col items-center justify-center">
-                <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
-                  Total Members
+                <p className="text-[11px] sm:text-[13px] font-medium text-gray-600">
+                  Total Downline Members
                 </p>
-                <p className="text-[16px] sm:text-[22px] font-bold text-gray-900">
+                <p className="text-[15px] sm:text-[22px] font-bold text-gray-900">
                   {stats.totalDownlineMembers}
                 </p>
               </div>
@@ -228,10 +228,10 @@ export const DownlineMembersPage = () => {
 
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 ">
               <div className="flex flex-col items-center justify-center">
-                <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
+                <p className="text-[11px] sm:text-[13px] font-medium text-gray-600">
                   Total Levels
                 </p>
-                <p className="text-[16px] sm:text-[22px] font-bold text-gray-900">
+                <p className="text-[15px] sm:text-[22px] font-bold text-gray-900">
                   {stats.totalLevels}
                 </p>
               </div>

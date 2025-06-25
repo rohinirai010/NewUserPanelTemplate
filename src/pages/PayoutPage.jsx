@@ -201,11 +201,11 @@ export const PayoutPage = () => {
     }, 1000);
   };
 
-   // Export configuration for DataTable
-   const exportConfig = {
+  // Export configuration for DataTable
+  const exportConfig = {
     filename: "payout-report",
     title: "Payout Report",
-    searchPlaceholder: "Search members..."
+    searchPlaceholder: "Search members...",
   };
 
   return (
@@ -245,10 +245,10 @@ export const PayoutPage = () => {
               {/* Header */}
               <div className="mb-4 sm:mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
                 <div>
-                  <h1 className="text-[17px] sm:text-xl font-bold text-gray-900">
+                  <h1 className="text-[17px] sm:text-[19px] font-medium text-gray-700">
                     Payout Management
                   </h1>
-                  <p className="text-[12px] sm:text-[15px] text-gray-600">
+                  <p className="text-[12px] sm:text-[13px] text-gray-500 tracking-wide">
                     Manage your withdrawal requests and payout history
                   </p>
                 </div>

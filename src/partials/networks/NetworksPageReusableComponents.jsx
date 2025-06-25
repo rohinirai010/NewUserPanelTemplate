@@ -1,4 +1,11 @@
-import React, { useState, useCallback, useMemo, useRef } from "react";
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  createContext,
+  useContext,
+} from "react";
 import ReactFlow, {
   Background,
   useNodesState,
@@ -18,10 +25,81 @@ import {
   Lock,
   Unlock,
 } from "lucide-react";
+import { createPortal } from "react-dom";
+
+// Create context for info card portal
+const InfoCardContext = createContext();
+
+// Info Card Component that renders via portal
+const InfoCard = ({ node, position, isVisible }) => {
+  const portalContainer = useContext(InfoCardContext);
+
+  if (!isVisible || !node || !portalContainer) return null;
+
+  return createPortal(
+    <div
+      className="fixed bg-white rounded-xl shadow-2xl border-2 border-gray-100 p-2 w-46 max-w-[46vw] backdrop-blur-sm pointer-events-none"
+      style={{
+        left: position.x,
+        top: position.y,
+        zIndex: 10000,
+        transform: "translate(-50%, 0)",
+      }}
+    >
+      <div className="flex items-center space-x-2 mb-3">
+        <div className="w-6 h-6 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+          <User className="w-4 h-4 text-white" />
+        </div>
+        <div>
+          <div className="font-bold text-[12px] text-gray-800">{node.name}</div>
+          <div className="text-[11px] text-gray-700 font-medium">{node.id}</div>
+        </div>
+      </div>
+
+      <div className="space-y-1 text-[11px]">
+        <div className="flex justify-between items-center px-2 py-1 bg-purple-50 rounded-lg">
+          <span className="text-gray-700 font-medium">Personal PV</span>
+          <span className="font-bold text-purple-600">{node.personalPV}</span>
+        </div>
+        <div className="flex justify-between items-center px-2 py-1 bg-blue-50 rounded-lg">
+          <span className="text-gray-700 font-medium">Group PV</span>
+          <span className="font-bold text-blue-600">{node.groupPV}</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="flex justify-between items-center px-2 py-1 bg-gray-100 rounded-lg">
+            <span className="text-gray-600">Left</span>
+            <span className="font-bold text-gray-800">{node.left}</span>
+          </div>
+          <div className="flex justify-between items-center px-2 py-1 bg-gray-100 rounded-lg">
+            <span className="text-gray-600">Right</span>
+            <span className="font-bold text-gray-800">{node.right}</span>
+          </div>
+        </div>
+        <div className="flex justify-between items-center px-2 py-1 bg-green-50 rounded-lg">
+          <span className="text-gray-700 font-medium">Total Left Carry</span>
+          <span className="font-bold text-green-600">
+            {node.totalLeftCarry}
+          </span>
+        </div>
+        <div className="flex justify-between items-center px-2 py-1 bg-orange-50 rounded-lg">
+          <span className="text-gray-700 font-medium">Total Right Carry</span>
+          <span className="font-bold text-orange-600">
+            {node.totalRightCarry}
+          </span>
+        </div>
+      </div>
+
+      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-white border-l-2 border-t-2 border-gray-100 rotate-45"></div>
+    </div>,
+    portalContainer
+  );
+};
 
 // Custom Node Component for actual nodes
 const CustomTreeNode = ({ data, id }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [infoCardPosition, setInfoCardPosition] = useState({ x: 0, y: 0 });
+  const nodeRef = useRef(null);
   const { node, onToggleCollapse } = data;
 
   const handleNodeClick = () => {
@@ -30,133 +108,94 @@ const CustomTreeNode = ({ data, id }) => {
     }
   };
 
-  return (
-    <div className="relative">
-      <Handle
-        type="target"
-        position={Position.Top}
-        style={{
-          background: "transparent",
-          border: "none",
-          width: "1px",
-          height: "1px",
-        }}
-      />
+  const handleMouseEnter = () => {
+    if (nodeRef.current) {
+      const rect = nodeRef.current.getBoundingClientRect();
+      setInfoCardPosition({
+        x: rect.left + rect.width / 2,
+        y: rect.bottom + 10,
+      });
+    }
+    setIsHovered(true);
+  };
 
-      <div
-        className="relative"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  return (
+    <>
+      <div className="relative" ref={nodeRef}>
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{
+            background: "transparent",
+            border: "none",
+            width: "1px",
+            height: "1px",
+          }}
+        />
+
         <div
-          className="flex flex-col items-center relative z-10"
-          style={{ zIndex: 10 }}
+          className="relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <div
-            onClick={handleNodeClick}
-            className="w-15 h-15 bg-gradient-to-br from-purple-300 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-110 border-4 border-white shadow-lg relative"
+            className="flex flex-col items-center relative z-10"
+            style={{ zIndex: 10 }}
           >
-            <User className="w-8 h-8 text-white drop-shadow-lg" />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 opacity-50 blur-sm"></div>
-          </div>
-
-          <div className="text-center mt-3">
-            <div className="font-bold text-[16px] tracking-wide text-gray-800 bg-white px-3 py-1 rounded-full shadow-sm border">
-              {node.id}
+            <div
+              onClick={handleNodeClick}
+              className="w-15 h-15 bg-gradient-to-br from-purple-300 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-110 border-4 border-white shadow-lg relative"
+            >
+              <User className="w-8 h-8 text-white drop-shadow-lg" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 opacity-50 blur-sm"></div>
             </div>
-            <div className="text-base text-gray-600 mt-1 font-medium">
-              Left:{" "}
-              <span className="text-purple-600 font-semibold">{node.left}</span>{" "}
-              | Right:{" "}
-              <span className="text-blue-600 font-semibold">{node.right}</span>
+
+            <div className="text-center mt-3">
+              <div className="font-bold text-[16px] tracking-wide text-gray-800 bg-white px-3 py-1 rounded-full shadow-sm border">
+                {node.id}
+              </div>
+              <div className="text-base text-gray-600 mt-1 font-medium">
+                Left:{" "}
+                <span className="text-purple-600 font-semibold">
+                  {node.left}
+                </span>{" "}
+                | Right:{" "}
+                <span className="text-blue-600 font-semibold">
+                  {node.right}
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Info Card - Positioned absolutely within the node but with higher z-index */}
-        {isHovered && (
-          <div
-            className="absolute top-28 left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-2xl border-2 border-gray-100 p-4 w-64 sm:w-72 max-w-[90vw] backdrop-blur-sm pointer-events-none"
-            style={{ zIndex: 999999 }}
-          >
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-11 h-11 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-                <User className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <div className="font-bold text-[18px] text-gray-800">
-                  {node.name}
-                </div>
-                <div className="text-[15px] text-gray-700 font-medium">
-                  {node.id}
-                </div>
-              </div>
+        {/* Collapse indicator */}
+        {node.children && node.children.length > 0 && node.collapsed && (
+          <div className="mt-3 text-center">
+            <div className="text-sm text-gray-800 bg-gray-100 px-3 py-1 rounded-full border-2">
+              ... {node.childrenCount} more
             </div>
-
-            <div className="space-y-2 text-[16px]">
-              <div className="flex justify-between items-center p-2 bg-purple-50 rounded-lg">
-                <span className="text-gray-700 font-medium">Personal PV</span>
-                <span className="font-bold text-purple-600">
-                  {node.personalPV}
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-blue-50 rounded-lg">
-                <span className="text-gray-700 font-medium">Group PV</span>
-                <span className="font-bold text-blue-600">{node.groupPV}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="flex justify-between items-center p-2 bg-gray-100 rounded-lg">
-                  <span className="text-gray-600">Left</span>
-                  <span className="font-bold text-gray-800">{node.left}</span>
-                </div>
-                <div className="flex justify-between items-center p-2 bg-gray-100 rounded-lg">
-                  <span className="text-gray-600">Right</span>
-                  <span className="font-bold text-gray-800">{node.right}</span>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-green-50 rounded-lg">
-                <span className="text-gray-700 font-medium">
-                  Total Left Carry
-                </span>
-                <span className="font-bold text-green-600">
-                  {node.totalLeftCarry}
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-orange-50 rounded-lg">
-                <span className="text-gray-700 font-medium">
-                  Total Right Carry
-                </span>
-                <span className="font-bold text-orange-600">
-                  {node.totalRightCarry}
-                </span>
-              </div>
-            </div>
-
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border-l-2 border-t-2 border-gray-100 rotate-45"></div>
           </div>
         )}
+
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{
+            background: "transparent",
+            border: "none",
+            width: "1px",
+            height: "1px",
+          }}
+        />
       </div>
 
-      {/* Collapse indicator */}
-      {node.children && node.children.length > 0 && node.collapsed && (
-        <div className="mt-3 text-center">
-          <div className="text-sm text-gray-800 bg-gray-100 px-3 py-1 rounded-full border-2">
-            ... {node.childrenCount} more
-          </div>
-        </div>
-      )}
-
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        style={{
-          background: "transparent",
-          border: "none",
-          width: "1px",
-          height: "1px",
-        }}
-      />
-    </div>
+      {/* Info Card rendered via portal */}
+      <InfoCard node={node} position={infoCardPosition} isVisible={isHovered} />
+    </>
   );
 };
 
@@ -543,6 +582,7 @@ const convertToReactFlowElements = (treeData, onAddNode, onToggleCollapse) => {
 // Main component
 export const GenealogyTree = () => {
   const containerRef = useRef(null);
+  const portalContainerRef = useRef(null);
   const [isLocked, setIsLocked] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -839,35 +879,40 @@ export const GenealogyTree = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className={`bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg flex flex-col border border-gray-200 ${
-        isFullscreen ? "h-screen w-screen" : "h-[600px]"
-      }`}
-    >
-      <div className="flex-1 rounded-xl bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50 overflow-hidden relative">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          fitView
-          minZoom={0.1}
-          maxZoom={4}
-          nodesDraggable={!isLocked}
-          nodesConnectable={false}
-          elementsSelectable={!isLocked}
-        >
-          <CustomControls
-            isLocked={isLocked}
-            onToggleLock={handleToggleLock}
-            onFullscreen={handleFullscreen}
-          />
-          <Background color="#e2e8f0" gap={20} size={4} />
-        </ReactFlow>
+    <InfoCardContext.Provider value={portalContainerRef.current}>
+      <div
+        ref={containerRef}
+        className={`bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg flex flex-col border border-gray-200 ${
+          isFullscreen ? "h-screen w-screen" : "h-[600px]"
+        }`}
+      >
+        <div className="flex-1 rounded-xl bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50 overflow-hidden relative">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            fitView
+            minZoom={0.1}
+            maxZoom={4}
+            nodesDraggable={!isLocked}
+            nodesConnectable={false}
+            elementsSelectable={!isLocked}
+          >
+            <CustomControls
+              isLocked={isLocked}
+              onToggleLock={handleToggleLock}
+              onFullscreen={handleFullscreen}
+            />
+            <Background color="#e2e8f0" gap={20} size={4} />
+          </ReactFlow>
+        </div>
+
+        {/* Portal container for info cards */}
+        <div ref={portalContainerRef} />
       </div>
-    </div>
+    </InfoCardContext.Provider>
   );
 };

@@ -1,15 +1,34 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Mail, Bell, ChevronDown, Menu, X, User, LogOut } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutUser } from "../ReduxStateManagement/user/slices/authSlice"
-import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../ReduxStateManagement/user/slices/authSlice";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import headerLogo from "../images/AuthLogo.png";
 
 const Header = ({ toggleSidebar }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const location = useLocation();
+
+const pathToLabelMap = {
+  "/user/dashboard": "Dashboard",
+  "/user/networks": "Networks",
+  "/user/register": "Register",
+  "/user/e-wallet": "E-Wallet",
+  "/user/payout": "Payout",
+  "/user/e-pin": "E-pin",
+  "/shopping": "Shopping",
+  "/tools": "Tools",
+  "/tools/settings": "Settings",
+  "/tools/analytics": "Analytics",
+  "/mailbox": "Mail Box",
+};
+
+const currentPath = location.pathname;
+const pageTitle = pathToLabelMap[currentPath] || "Dashboard";
+
   // Get user data from Redux store
   const { user } = useSelector((state) => state.auth);
   const name = user?.fullName || "User";
@@ -92,12 +111,11 @@ const Header = ({ toggleSidebar }) => {
           {/* Desktop Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="w-6 sm:w-8 h-6 sm:h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">L</span>
-              </div>
-              <span className="font-semibold text-[16px] sm:text-lg">LOGO</span>
+              <Link to="/user/dashboard">
+                <img src={headerLogo} alt="Logo" className="w-20 h-10" />
+              </Link>
               <span className="hidden sm:block text-gray-400">|</span>
-              <span className="hidden sm:block text-gray-600">Dashboard</span>
+              <span className="hidden sm:block text-gray-600">{pageTitle}</span>
             </div>
           </div>
         </div>
@@ -127,7 +145,9 @@ const Header = ({ toggleSidebar }) => {
             {isNotificationOpen && (
               <div className="absolute right-0 mt-2 w-56 sm:w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                 <div className="px-2 py-1 sm:py-3 sm:px-3  border-b border-gray-100">
-                  <h3 className="text-sm sm:text-base font-semibold text-gray-900">Notifications</h3>
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-900">
+                    Notifications
+                  </h3>
                   <p className="text-[12px] sm:text-sm text-gray-500">
                     {unreadCount} unread notifications
                   </p>
@@ -214,7 +234,9 @@ const Header = ({ toggleSidebar }) => {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900 text-[13px] sm:text-[14px]">{name}</p>
+                      <p className="font-medium text-gray-900 text-[13px] sm:text-[14px]">
+                        {name}
+                      </p>
                       <p className="text-[11px] sm:text-[13px] text-gray-500">
                         {username}
                       </p>
