@@ -57,13 +57,23 @@ const InfoCard = ({ node, position, isVisible }) => {
       </div>
 
       <div className="space-y-1 text-[11px]">
+        <div className="flex justify-between items-center px-2 py-1 bg-gray-50 rounded-lg">
+          <span className="text-gray-700 font-medium">Status</span>
+          <span
+            className={`font-bold ${
+              node.active ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {node.active ? "Active" : "Inactive"}
+          </span>
+        </div>
         <div className="flex justify-between items-center px-2 py-1 bg-purple-50 rounded-lg">
-          <span className="text-gray-700 font-medium">Personal PV</span>
-          <span className="font-bold text-purple-600">{node.personalPV}</span>
+          <span className="text-gray-700 font-medium">Personal Unit</span>
+          <span className="font-bold text-purple-600">{node.personalUnit}</span>
         </div>
         <div className="flex justify-between items-center px-2 py-1 bg-blue-50 rounded-lg">
-          <span className="text-gray-700 font-medium">Group PV</span>
-          <span className="font-bold text-blue-600">{node.groupPV}</span>
+          <span className="text-gray-700 font-medium">Group Unit</span>
+          <span className="font-bold text-blue-600">{node.groupUnit}</span>
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div className="flex justify-between items-center px-2 py-1 bg-gray-100 rounded-lg">
@@ -146,13 +156,41 @@ const CustomTreeNode = ({ data, id }) => {
             className="flex flex-col items-center relative z-10"
             style={{ zIndex: 10 }}
           >
-            <div
-              onClick={handleNodeClick}
-              className="w-15 h-15 bg-gradient-to-br from-purple-300 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-110 border-4 border-white shadow-lg relative"
-            >
-              <User className="w-8 h-8 text-white drop-shadow-lg" />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 opacity-50 blur-sm"></div>
-            </div>
+         <div
+  onClick={handleNodeClick}
+  className={`w-16 h-16 bg-gradient-to-br from-purple-300 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-110 border-3 ${
+    node.active 
+      ? 'border-green-400 shadow-green-300/20' 
+      : 'border-red-400 shadow-red-300/50'
+  } shadow-lg relative`}
+>
+  <User className="w-9 h-9 text-white drop-shadow-lg" />
+  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 opacity-50 blur-sm"></div>
+  
+  {/* Double ring effect */}
+  <div className={`absolute -inset-2 rounded-full border-2 ${
+    node.active 
+      ? 'border-green-300 shadow-green-300/10' 
+      : 'border-red-300 shadow-red-400/30'
+  } shadow-2xl animate-pulse opacity-60`}></div>
+  
+  <div className={`absolute -inset-3.5 rounded-full border-2 ${
+    node.active 
+      ? 'border-green-200' 
+      : 'border-red-200'
+  } opacity-40 animate-pulse`} style={{ animationDelay: '0.5s' }}></div>
+  
+  {/* Large status indicator */}
+  <div className={`absolute -top-2 -right-2 w-6 h-6 ${
+    node.active ? 'bg-green-500' : 'bg-red-500'
+  } rounded-full border-3 border-white shadow-xl flex items-center justify-center z-10`}>
+    <div className={`w-3 h-3 ${
+      node.active ? 'bg-green-200' : 'bg-red-200'
+    } rounded-full animate-pulse`}></div>
+  </div>
+  
+  
+</div>
 
             <div className="text-center mt-3">
               <div className="font-bold text-[16px] tracking-wide text-gray-800 bg-white px-3 py-1 rounded-full shadow-sm border">
@@ -591,10 +629,11 @@ export const GenealogyTree = () => {
     name: "Brent Hall",
     left: 9,
     right: 14,
-    personalPV: 150,
-    groupPV: 0,
+    personalUnit: 150,
+    groupUnit: 0,
     totalLeftCarry: 0,
     totalRightCarry: 350,
+    active: true, 
     collapsed: false,
     childrenCount: 2,
     children: [
@@ -603,10 +642,11 @@ export const GenealogyTree = () => {
         name: "John Smith",
         left: 7,
         right: 1,
-        personalPV: 120,
-        groupPV: 50,
+        personalUnit: 120,
+        groupUnit: 50,
         totalLeftCarry: 100,
         totalRightCarry: 200,
+        active: false, 
         collapsed: false,
         childrenCount: 2,
         children: [
@@ -615,10 +655,11 @@ export const GenealogyTree = () => {
             name: "Lang Lang",
             left: 6,
             right: 0,
-            personalPV: 80,
-            groupPV: 30,
+            personalUnit: 80,
+            groupUnit: 30,
             totalLeftCarry: 50,
             totalRightCarry: 100,
+            active: true,
             collapsed: false,
             children: [
               {
@@ -626,10 +667,11 @@ export const GenealogyTree = () => {
                 name: "Sam Wilson",
                 left: 5,
                 right: 0,
-                personalPV: 60,
-                groupPV: 20,
+                personalUnit: 60,
+                groupUnit: 20,
                 totalLeftCarry: 25,
                 totalRightCarry: 75,
+                active: false, 
                 collapsed: false,
                 children: [null, null],
               },
@@ -641,10 +683,11 @@ export const GenealogyTree = () => {
             name: "Mike Johnson",
             left: 0,
             right: 0,
-            personalPV: 90,
-            groupPV: 40,
+            personalUnit: 90,
+            groupUnit: 40,
             totalLeftCarry: 60,
             totalRightCarry: 120,
+            active: true, 
             collapsed: false,
             children: [null, null],
           },
@@ -655,10 +698,11 @@ export const GenealogyTree = () => {
         name: "Sarah Davis",
         left: 4,
         right: 9,
-        personalPV: 110,
-        groupPV: 60,
+        personalUnit: 110,
+        groupUnit: 60,
         totalLeftCarry: 80,
         totalRightCarry: 180,
+        active: true, 
         collapsed: false,
         childrenCount: 4,
         children: [
@@ -667,10 +711,11 @@ export const GenealogyTree = () => {
             name: "Alex Brown",
             left: 3,
             right: 0,
-            personalPV: 70,
-            groupPV: 25,
+            personalUnit: 70,
+            groupUnit: 25,
             totalLeftCarry: 40,
             totalRightCarry: 90,
+            active: false, 
             collapsed: false,
             children: [
               {
@@ -678,10 +723,11 @@ export const GenealogyTree = () => {
                 name: "Emma White",
                 left: 2,
                 right: 0,
-                personalPV: 50,
-                groupPV: 15,
+                personalUnit: 50,
+                groupUnit: 15,
                 totalLeftCarry: 20,
                 totalRightCarry: 60,
+                active: true,
                 collapsed: false,
                 children: [null, null],
               },
@@ -693,10 +739,11 @@ export const GenealogyTree = () => {
             name: "David Wilson",
             left: 3,
             right: 5,
-            personalPV: 95,
-            groupPV: 45,
+            personalUnit: 95,
+            groupUnit: 45,
             totalLeftCarry: 70,
             totalRightCarry: 140,
+            active: true, 
             collapsed: false,
             children: [
               {
@@ -704,10 +751,11 @@ export const GenealogyTree = () => {
                 name: "Lisa Garcia",
                 left: 1,
                 right: 1,
-                personalPV: 65,
-                groupPV: 20,
+                personalUnit: 65,
+                groupUnit: 20,
                 totalLeftCarry: 30,
                 totalRightCarry: 80,
+                active: false, 
                 collapsed: false,
                 children: [null, null],
               },
@@ -716,10 +764,11 @@ export const GenealogyTree = () => {
                 name: "Tom Martinez",
                 left: 0,
                 right: 4,
-                personalPV: 75,
-                groupPV: 35,
+                personalUnit: 75,
+                groupUnit: 35,
                 totalLeftCarry: 50,
                 totalRightCarry: 110,
+                active: true, 
                 collapsed: false,
                 children: [null, null],
               },

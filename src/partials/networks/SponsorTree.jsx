@@ -49,13 +49,23 @@ const InfoCard = ({ node, position, isVisible }) => {
       </div>
 
       <div className="space-y-1 text-[11px]">
+      <div className="flex justify-between items-center px-2 py-1 bg-gray-50 rounded-lg">
+          <span className="text-gray-700 font-medium">Status</span>
+          <span
+            className={`font-bold ${
+              node.active ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {node.active ? "Active" : "Inactive"}
+          </span>
+        </div>
         <div className="flex justify-between items-center px-2 py-1 bg-purple-50 rounded-lg">
-          <span className="text-gray-700 font-medium">Personal PV</span>
-          <span className="font-bold text-purple-600">{node.personalPV}</span>
+          <span className="text-gray-700 font-medium">Personal Unit</span>
+          <span className="font-bold text-purple-600">{node.personalUnit}</span>
         </div>
         <div className="flex justify-between items-center px-2 py-1 bg-blue-50 rounded-lg">
-          <span className="text-gray-700 font-medium">Group PV</span>
-          <span className="font-bold text-blue-600">{node.groupPV}</span>
+          <span className="text-gray-700 font-medium">Group Unit</span>
+          <span className="font-bold text-blue-600">{node.groupUnit}</span>
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div className="flex justify-between items-center px-2 py-1 bg-gray-100 rounded-lg">
@@ -138,13 +148,41 @@ const CustomSponsorNode = ({ data, id }) => {
             className="flex flex-col items-center relative z-10"
             style={{ zIndex: 10 }}
           >
-            <div
-              onClick={handleNodeClick}
-              className="w-15 h-15 bg-gradient-to-br from-purple-300 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-110 border-4 border-white shadow-lg relative"
-            >
-              <User className="w-8 h-8 text-white drop-shadow-lg" />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 opacity-50 blur-sm"></div>
-            </div>
+           <div
+             onClick={handleNodeClick}
+             className={`w-16 h-16 bg-gradient-to-br from-purple-300 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-110 border-3 ${
+               node.active 
+                 ? 'border-green-400 shadow-green-300/20' 
+                 : 'border-red-400 shadow-red-300/50'
+             } shadow-lg relative`}
+           >
+             <User className="w-9 h-9 text-white drop-shadow-lg" />
+             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 opacity-50 blur-sm"></div>
+             
+             {/* Double ring effect */}
+             <div className={`absolute -inset-2 rounded-full border-2 ${
+               node.active 
+                 ? 'border-green-300 shadow-green-300/10' 
+                 : 'border-red-300 shadow-red-400/30'
+             } shadow-2xl animate-pulse opacity-60`}></div>
+             
+             <div className={`absolute -inset-3.5 rounded-full border-2 ${
+               node.active 
+                 ? 'border-green-200' 
+                 : 'border-red-200'
+             } opacity-40 animate-pulse`} style={{ animationDelay: '0.5s' }}></div>
+             
+             {/* Large status indicator */}
+             <div className={`absolute -top-2 -right-2 w-6 h-6 ${
+               node.active ? 'bg-green-500' : 'bg-red-500'
+             } rounded-full border-3 border-white shadow-xl flex items-center justify-center z-10`}>
+               <div className={`w-3 h-3 ${
+                 node.active ? 'bg-green-200' : 'bg-red-200'
+               } rounded-full animate-pulse`}></div>
+             </div>
+             
+             
+           </div>
 
             <div className="text-center mt-3">
               <div className="font-bold text-[16px] tracking-wide text-gray-800 bg-white px-3 py-1 rounded-full shadow-sm border">
@@ -461,41 +499,44 @@ export const SponsorTree = () => {
     id: "INF00123",
     name: "Root User",
     count: 16,
-    personalPV: 150,
-    groupPV: 2500,
+    personalUnit: 150,
+    groupUnit: 2500,
     left: 7,
     right: 9,
     totalLeftCarry: 100,
     totalRightCarry: 200,
     level: 1,
     collapsed: false,
+    active: true, 
     totalChildrenCount: 6,
     children: [
       {
         id: "INF75481323",
         name: "John Smith",
         count: 1,
-        personalPV: 120,
-        groupPV: 800,
+        personalUnit: 120,
+        groupUnit: 800,
         left: 7,
         right: 1,
         totalLeftCarry: 100,
         totalRightCarry: 200,
         level: 2,
         collapsed: false,
+        active: true, 
         children: [
           {
             id: "INF3874705",
             name: "Alice Johnson",
             count: 0,
-            personalPV: 90,
-            groupPV: 300,
+            personalUnit: 90,
+            groupUnit: 300,
             left: 0,
             right: 0,
             totalLeftCarry: 50,
             totalRightCarry: 75,
             level: 3,
             collapsed: false,
+            active: false, 
             children: [],
           },
         ],
@@ -504,8 +545,8 @@ export const SponsorTree = () => {
         id: "INF18536507",
         name: "Sarah Davis",
         count: 5,
-        personalPV: 110,
-        groupPV: 1200,
+        personalUnit: 110,
+        groupUnit: 1200,
         left: 3,
         right: 2,
         totalLeftCarry: 150,
@@ -517,41 +558,44 @@ export const SponsorTree = () => {
             id: "INF9165071",
             name: "Mike Brown",
             count: 3,
-            personalPV: 95,
-            groupPV: 600,
+            personalUnit: 95,
+            groupUnit: 600,
             left: 1,
             right: 2,
             totalLeftCarry: 80,
             totalRightCarry: 120,
             level: 3,
             collapsed: false,
+            active: false, 
             children: [
               {
                 id: "INF47794583",
                 name: "Emma White",
                 count: 0,
-                personalPV: 80,
-                groupPV: 250,
+                personalUnit: 80,
+                groupUnit: 250,
                 left: 0,
                 right: 0,
                 totalLeftCarry: 40,
                 totalRightCarry: 60,
                 level: 4,
                 collapsed: false,
+                active: true, 
                 children: [],
               },
               {
                 id: "INF47794588",
                 name: "Tom Green",
                 count: 0,
-                personalPV: 85,
-                groupPV: 280,
+                personalUnit: 85,
+                groupUnit: 280,
                 left: 0,
                 right: 0,
                 totalLeftCarry: 45,
                 totalRightCarry: 65,
                 level: 4,
                 collapsed: false,
+                active: true, 
                 children: [],
               },
             ],
@@ -560,14 +604,15 @@ export const SponsorTree = () => {
             id: "INF477945072",
             name: "Lisa Brown",
             count: 2,
-            personalPV: 75,
-            groupPV: 220,
+            personalUnit: 75,
+            groupUnit: 220,
             left: 1,
             right: 1,
             totalLeftCarry: 35,
             totalRightCarry: 55,
             level: 3,
             collapsed: false,
+            active: false, 
             children: [],
           },
         ],
@@ -576,40 +621,43 @@ export const SponsorTree = () => {
         id: "INF42341484",
         name: "Kevin Wilson",
         count: 5,
-        personalPV: 100,
-        groupPV: 900,
+        personalUnit: 100,
+        groupUnit: 900,
         left: 2,
         right: 3,
         totalLeftCarry: 120,
         totalRightCarry: 160,
         level: 2,
         collapsed: false,
+        active: false, 
         children: [
           {
             id: "INF52392885",
             name: "Jennifer Lee",
             count: 1,
-            personalPV: 90,
-            groupPV: 220,
+            personalUnit: 90,
+            groupUnit: 220,
             left: 0,
             right: 1,
             totalLeftCarry: 30,
             totalRightCarry: 50,
             level: 3,
             collapsed: false,
+            active: true, 
             children: [
               {
                 id: "INF52392742",
                 name: "David Kim",
                 count: 0,
-                personalPV: 70,
-                groupPV: 180,
+                personalUnit: 70,
+                groupUnit: 180,
                 left: 0,
                 right: 0,
                 totalLeftCarry: 25,
                 totalRightCarry: 35,
                 level: 4,
                 collapsed: false,
+                active: true, 
                 children: [],
               },
             ],
@@ -618,27 +666,29 @@ export const SponsorTree = () => {
             id: "INF52392886",
             name: "Mark Taylor",
             count: 2,
-            personalPV: 95,
-            groupPV: 240,
+            personalUnit: 95,
+            groupUnit: 240,
             left: 1,
             right: 1,
             totalLeftCarry: 40,
             totalRightCarry: 60,
             level: 3,
             collapsed: false,
+            active: false, 
             children: [
               {
                 id: "INF52392743",
                 name: "Anna Davis",
                 count: 0,
-                personalPV: 85,
-                groupPV: 200,
+                personalUnit: 85,
+                groupUnit: 200,
                 left: 0,
                 right: 0,
                 totalLeftCarry: 20,
                 totalRightCarry: 30,
                 level: 4,
                 collapsed: false,
+                active: false, 
                 children: [],
               },
             ],
@@ -647,14 +697,15 @@ export const SponsorTree = () => {
             id: "INF52392887",
             name: "Rachel White",
             count: 1,
-            personalPV: 88,
-            groupPV: 210,
+            personalUnit: 88,
+            groupUnit: 210,
             left: 0,
             right: 1,
             totalLeftCarry: 25,
             totalRightCarry: 45,
             level: 3,
             collapsed: false,
+            active: true, 
             children: [],
           },
         ],
@@ -663,42 +714,45 @@ export const SponsorTree = () => {
         id: "INF99999001",
         name: "Michael Johnson",
         count: 2,
-        personalPV: 85,
-        groupPV: 400,
+        personalUnit: 85,
+        groupUnit: 400,
         left: 1,
         right: 1,
         totalLeftCarry: 60,
         totalRightCarry: 80,
         level: 2,
         collapsed: false,
+        active: true, 
         children: [],
       },
       {
         id: "INF99999002",
         name: "Patricia Miller",
         count: 1,
-        personalPV: 95,
-        groupPV: 350,
+        personalUnit: 95,
+        groupUnit: 350,
         left: 0,
         right: 1,
         totalLeftCarry: 40,
         totalRightCarry: 70,
         level: 2,
         collapsed: false,
+        active: true, 
         children: [],
       },
       {
         id: "INF99999003",
         name: "Robert Anderson",
         count: 0,
-        personalPV: 75,
-        groupPV: 200,
+        personalUnit: 75,
+        groupUnit: 200,
         left: 0,
         right: 0,
         totalLeftCarry: 30,
         totalRightCarry: 50,
         level: 2,
         collapsed: false,
+        active: false, 
         children: [],
       },
     ],

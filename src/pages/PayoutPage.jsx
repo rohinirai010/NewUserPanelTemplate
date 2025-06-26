@@ -9,6 +9,7 @@ import {
   X,
   TrendingUp,
   TrendingDown,
+  IndianRupeeIcon,
 } from "lucide-react";
 import { DataTable } from "../components/BinarySoftwareCommonComponents/DataTable";
 import Sidebar from "../partials/Sidebar";
@@ -108,7 +109,7 @@ export const PayoutPage = () => {
       render: (value) => (
         <div className="flex items-center gap-1">
           <span className="text-[12px] sm:text-sm font-semibold text-green-600">
-            ${value.toFixed(2)}
+          ₹{value.toFixed(2)}
           </span>
           <TrendingUp className="w-3 h-3 text-green-500" />
         </div>
@@ -257,7 +258,7 @@ export const PayoutPage = () => {
                   onClick={handlePayoutRequest}
                   className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-sm font-medium bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-200 shadow-sm cursor-pointer"
                 >
-                  <DollarSign className="w-4 h-4" />
+                  <IndianRupeeIcon className="w-4 h-4" />
                   Request Payout
                 </button>
               </div>
@@ -274,7 +275,7 @@ export const PayoutPage = () => {
                         Requested
                       </p>
                       <p className="text-[14px] sm:text-[20px] font-bold text-gray-900">
-                        $ {stats.requested.toFixed(2)}
+                      ₹ {stats.requested.toFixed(2)}
                       </p>
                       <p className="text-[10px] text-gray-500 flex items-center gap-1">
                         Last Month{" "}
@@ -294,7 +295,7 @@ export const PayoutPage = () => {
                         Approved
                       </p>
                       <p className="text-[14px] sm:text-[20px] font-bold text-gray-900">
-                        $ {stats.approved.toFixed(2)}
+                      ₹ {stats.approved.toFixed(2)}
                       </p>
                       <p className="text-[10px] text-gray-500 flex items-center gap-1">
                         Last Month{" "}
@@ -307,14 +308,14 @@ export const PayoutPage = () => {
                 <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-2 sm:p-3">
                   <div className="flex items-center gap-2 sm:gap-3">
                     <div className="w-6 sm:w-10 h-6 sm:h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-                      <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
+                      <IndianRupeeIcon className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
                     </div>
                     <div>
                       <p className="text-[12px] sm:text-[13px] font-medium text-gray-600">
                         Paid
                       </p>
                       <p className="text-[14px] sm:text-[20px] font-bold text-gray-900">
-                        $ {stats.paid.toFixed(2)}
+                      ₹ {stats.paid.toFixed(2)}
                       </p>
                       <p className="text-[10px] text-gray-500 flex items-center gap-1">
                         Last Month{" "}
@@ -334,7 +335,7 @@ export const PayoutPage = () => {
                         Rejected
                       </p>
                       <p className="text-[14px] sm:text-[20px] font-bold text-gray-900">
-                        $ {stats.rejected.toFixed(2)}
+                      ₹ {stats.rejected.toFixed(2)}
                       </p>
                       <p className="text-[10px] text-gray-500 flex items-center gap-1">
                         Last Month{" "}
@@ -412,7 +413,7 @@ export const PayoutPage = () => {
                           </label>
                           <div className="relative">
                             <span className="absolute left-3 top-1/2 text-[13px] transform -translate-y-1/2 text-gray-500">
-                              $
+                            ₹
                             </span>
                             <input
                               type="number"
@@ -464,25 +465,25 @@ export const PayoutPage = () => {
                             <span className="text-gray-600">
                               Default Currency
                             </span>
-                            <span className="text-gray-900">($)</span>
+                            <span className="text-gray-900">(₹)</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
                               E-Wallet Balance
                             </span>
-                            <span className="text-gray-900">$ 15.84</span>
+                            <span className="text-gray-900">₹ 15.84</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
                               Ewallet Amount Already in Payout Process
                             </span>
-                            <span className="text-gray-900">$ 17.02</span>
+                            <span className="text-gray-900">₹ 17.02</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
                               Total Paid Amount
                             </span>
-                            <span className="text-gray-900">$ 26.54</span>
+                            <span className="text-gray-900">₹ 26.54</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">Payout Method</span>
@@ -492,19 +493,19 @@ export const PayoutPage = () => {
                             <span className="text-gray-600">
                               Minimum Withdrawal Amount
                             </span>
-                            <span className="text-gray-900">$ 10.00</span>
+                            <span className="text-gray-900">₹ 10.00</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
                               Maximum Withdrawal Amount
                             </span>
-                            <span className="text-gray-900">$ 500.00</span>
+                            <span className="text-gray-900">₹ 500.00</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
                               Available Maximum Withdrawal Amount
                             </span>
-                            <span className="text-gray-900">$ 15.84</span>
+                            <span className="text-gray-900">₹ 15.84</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">

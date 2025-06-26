@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Wallet, DollarSign } from "lucide-react";
+import { Wallet, IndianRupeeIcon } from "lucide-react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import { useSelector } from "react-redux";
@@ -28,8 +28,8 @@ const Dashboard = () => {
     name: user?.fullName || '',
     id: user?.username || '',
     membershipPack: user?.membershipPack || '',
-    personalPV: user?.personalPV || 0,
-    groupPV: user?.groupPV || 0,
+    personalUnit: user?.personalUnit || 0,
+    groupUnit: user?.groupUnit || 0,
     sponsor: user?.sponsorId || '',
   };
 
@@ -43,27 +43,27 @@ const Dashboard = () => {
   const stats = [
     {
       label: "E-Wallet",
-      value: `$${statsData.eWallet}`,
+      value: `₹${statsData.eWallet}`,
       color: "green",
       icon: Wallet,
     },
     {
       label: "Commission",
-      value: `$${statsData.commission}`,
+      value: `₹${statsData.commission}`,
       color: "blue",
-      icon: DollarSign,
+      icon: IndianRupeeIcon,
     },
     {
       label: "Total Credit",
-      value: `$${statsData.totalCredit}`,
+      value: `₹${statsData.totalCredit}`,
       color: "purple",
       icon: Wallet,
     },
     {
       label: "Total Debit",
-      value: `$${statsData.totalDebit}`,
+      value: `₹${statsData.totalDebit}`,
       color: "teal",
-      icon: DollarSign,
+      icon: IndianRupeeIcon,
     },
   ];
 
@@ -137,22 +137,22 @@ const Dashboard = () => {
       {
         name: "Michael Davis",
         id: "INF42341484",
-        value: "$25.50",
+        value: "₹25.50",
         avatar: "M",
       },
       {
         name: "David Andrade",
         id: "INF18536507",
-        value: "$12.75",
+        value: "₹12.75",
         avatar: "D",
       },
       {
         name: "Corrie Washington",
         id: "INF91850711",
-        value: "$8.50",
+        value: "₹8.50",
         avatar: "C",
       },
-      { name: "Jeremy Lee", id: "INF55329858", value: "$6.80", avatar: "J" },
+      { name: "Jeremy Lee", id: "INF55329858", value: "₹6.80", avatar: "J" },
     ],
     "Top Recruiters": [
       {
@@ -196,16 +196,16 @@ const Dashboard = () => {
   // Earnings & Expenses data
   const earningsExpensesData = {
     Earnings: [
-      { label: "Referral", amount: "$21.25" },
-      { label: "Level Commission", amount: "$26.35" },
-      { label: "Binary Commission", amount: "$23.80" },
-      { label: "Matching Bonus", amount: "$18.90" },
+      { label: "Referral", amount: "₹21.25" },
+      { label: "Level Commission", amount: "₹26.35" },
+      { label: "Binary Commission", amount: "₹23.80" },
+      { label: "Matching Bonus", amount: "₹18.90" },
     ],
     Expenses: [
-      { label: "Processing Fee", amount: "$5.25" },
-      { label: "Maintenance", amount: "$12.00" },
-      { label: "Tax Deduction", amount: "$8.50" },
-      { label: "Transfer Fee", amount: "$3.75" },
+      { label: "Processing Fee", amount: "₹5.25" },
+      { label: "Maintenance", amount: "₹12.00" },
+      { label: "Tax Deduction", amount: "₹8.50" },
+      { label: "Transfer Fee", amount: "₹3.75" },
     ],
   };
 
@@ -745,16 +745,16 @@ const Dashboard = () => {
               </div>
               <div className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-0 lg:gap-4 xl:gap-0 text-center text-sm">
                 <div>
-                  <p className="text-[12px] text-gray-500">Personal PV</p>
+                  <p className="text-[12px] text-gray-500">Personal Unit</p>
                   <p className="text-[11px] font-semibold">
-                    {userData.personalPV}
+                    {userData.personalUnit}
                   </p>
                 </div>
                 <div className="block lg:hidden xl:block">|</div>
                 <div>
-                  <p className="text-[12px] text-gray-500">Group PV</p>
+                  <p className="text-[12px] text-gray-500">Group Unit</p>
                   <p className="text-[11px] font-semibold">
-                    {userData.groupPV}
+                    {userData.groupUnit}
                   </p>
                 </div>
               </div>
@@ -839,7 +839,7 @@ const Dashboard = () => {
                         {hoveredPayout ? hoveredPayout.type : "Total"}
                       </div>
                       <div className="text-xl font-bold">
-                        $
+                      ₹
                         {hoveredPayout
                           ? hoveredPayout.value.toFixed(2)
                           : totalPayout.toFixed(2)}
@@ -869,7 +869,7 @@ const Dashboard = () => {
                             : "text-blue-300"
                         }
                       >
-                        ${hoveredPayout.value} ({hoveredPayout.percentage}%)
+                        ₹{hoveredPayout.value} ({hoveredPayout.percentage}%)
                       </div>
                     </div>
                     {/* Tooltip arrow */}
@@ -896,13 +896,13 @@ const Dashboard = () => {
                     Requested
                   </span>
                   <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs">
-                    ${payoutData.requested}
+                  ₹{payoutData.requested}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-2">
                   <span className="text-sm">Approved</span>
                   <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs">
-                    ${payoutData.approved}
+                  ₹{payoutData.approved}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-green-50 rounded">
@@ -911,13 +911,13 @@ const Dashboard = () => {
                     Paid
                   </span>
                   <span className="bg-green-600 text-white px-2 py-1 rounded text-xs">
-                    ${payoutData.paid}
+                  ₹{payoutData.paid}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-2">
                   <span className="text-sm">Rejected</span>
                   <span className="bg-red-600 text-white px-2 py-1 rounded text-xs">
-                    ${payoutData.rejected}
+                  ₹{payoutData.rejected}
                   </span>
                 </div>
               </div>

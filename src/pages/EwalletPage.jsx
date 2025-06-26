@@ -1,15 +1,10 @@
 import React, { useState, useMemo } from "react";
 import {
   Filter,
-  DollarSign,
-  CreditCard,
-  Clock,
   CheckCircle,
-  XCircle,
   X,
   TrendingUp,
   TrendingDown,
-  ArrowUpDown,
   Wallet,
   Send,
 } from "lucide-react";
@@ -189,7 +184,7 @@ export const EWalletPage = () => {
                   item.type === "credit" ? "text-green-600" : "text-red-600"
                 }`}
               >
-                {item.type === "credit" ? "+" : "-"}$
+                {item.type === "credit" ? "+" : "-"}₹
                 {Math.abs(value).toFixed(2)}
               </span>
               {item.type === "credit" ? (
@@ -212,7 +207,7 @@ export const EWalletPage = () => {
           header: "Balance",
           render: (value) => (
             <div className="text-[12px] sm:text-sm font-semibold text-purple-600">
-              ${value}
+              ₹{value}
             </div>
           ),
         },
@@ -233,7 +228,7 @@ export const EWalletPage = () => {
           header: "Total Amount",
           render: (value) => (
             <div className="text-[12px] sm:text-sm font-semibold text-green-600">
-              ${value.toFixed(2)}
+              ₹{value.toFixed(2)}
             </div>
           ),
         },
@@ -242,7 +237,7 @@ export const EWalletPage = () => {
           header: "TDS",
           render: (value) => (
             <div className="text-[12px] sm:text-sm text-gray-600">
-              ${value.toFixed(2)}
+              ₹{value.toFixed(2)}
             </div>
           ),
         },
@@ -251,7 +246,7 @@ export const EWalletPage = () => {
           header: "Service Charge",
           render: (value) => (
             <div className="text-[12px] sm:text-sm text-gray-600">
-              ${value.toFixed(2)}
+              ₹{value.toFixed(2)}
             </div>
           ),
         },
@@ -260,7 +255,7 @@ export const EWalletPage = () => {
           header: "Amount Payable",
           render: (value) => (
             <div className="text-[12px] sm:text-sm font-semibold text-blue-600">
-              ${value.toFixed(2)}
+              ₹{value.toFixed(2)}
             </div>
           ),
         },
@@ -293,7 +288,7 @@ export const EWalletPage = () => {
                 item.type === "credit" ? "text-green-600" : "text-red-600"
               }`}
             >
-              {item.type === "credit" ? "+" : "-"}${Math.abs(value).toFixed(2)}
+              {item.type === "credit" ? "+" : "-"}₹{Math.abs(value).toFixed(2)}
             </span>
             {item.type === "credit" ? (
               <TrendingUp className="w-3 h-3 text-green-500" />
@@ -454,7 +449,7 @@ export const EWalletPage = () => {
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-[8px] sm:text-[10px] font-bold text-gray-700">
-            ${balance}
+          ₹{balance}
           </span>
         </div>
       </div>
@@ -604,7 +599,7 @@ export const EWalletPage = () => {
                             E-Wallet Balance
                           </p>
                           <p className="text-[13px] sm:text-[16px] font-bold text-gray-900">
-                            $ {eWalletStats.balance.toFixed(2)}
+                          ₹ {eWalletStats.balance.toFixed(2)}
                           </p>
                           <p className="text-[10px] text-gray-500 flex items-center gap-1">
                             Last Month{" "}
@@ -625,7 +620,7 @@ export const EWalletPage = () => {
                             Credited Amount
                           </p>
                           <p className="text-[13px] sm:text-[16px] font-bold text-gray-900">
-                            $ {eWalletStats.credited.toFixed(2)}
+                          ₹ {eWalletStats.credited.toFixed(2)}
                           </p>
                           <p className="text-[10px] text-gray-500 flex items-center gap-1">
                             Last Month{" "}
@@ -646,7 +641,7 @@ export const EWalletPage = () => {
                             Debited Amount
                           </p>
                           <p className="text-[13px] sm:text-[16px] font-bold text-gray-900">
-                            $ {eWalletStats.debited.toFixed(2)}
+                          ₹ {eWalletStats.debited.toFixed(2)}
                           </p>
                           <p className="text-[10px] text-gray-500 flex items-center gap-1">
                             Last Month{" "}
@@ -668,13 +663,13 @@ export const EWalletPage = () => {
                             <div className="flex items-center gap-1">
                               <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-500 rounded-full"></div>
                               <span className="text-[10px] sm:text-[12px] text-gray-600">
-                                Spent $ {eWalletStats.spent.toFixed(2)}
+                                Spent ₹ {eWalletStats.spent.toFixed(2)}
                               </span>
                             </div>
                             <div className="flex items-center gap-1">
                               <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-500 rounded-full"></div>
                               <span className="text-[10px] sm:text-[12px] text-gray-600">
-                                Balance $ {eWalletStats.balance.toFixed(2)}
+                                Balance ₹ {eWalletStats.balance.toFixed(2)}
                               </span>
                             </div>
                           </div>
@@ -900,7 +895,7 @@ export const EWalletPage = () => {
                           </label>
                           <div className="relative">
                             <span className="absolute left-3 top-1/2 text-[13px] transform -translate-y-1/2 text-gray-500">
-                              $
+                            ₹
                             </span>
                             <input
                               type="number"
@@ -923,7 +918,7 @@ export const EWalletPage = () => {
                           </label>
                           <div className="relative">
                             <span className="absolute left-3 top-1/2 text-[13px] transform -translate-y-1/2 text-gray-500">
-                              $
+                            ₹
                             </span>
                             <input
                               type="text"
@@ -941,7 +936,7 @@ export const EWalletPage = () => {
                           </label>
                           <div className="relative">
                             <span className="absolute left-3 top-1/2 text-[13px] transform -translate-y-1/2 text-gray-500">
-                              $
+                            ₹
                             </span>
                             <input
                               type="text"
