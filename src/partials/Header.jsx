@@ -17,7 +17,7 @@ const pathToLabelMap = {
   "/user/networks": "Networks",
   "/user/register": "Register",
   "/user/e-wallet": "E-Wallet",
-  "/user/payout": "Payout",
+  "/user/withdrawal": "Withdrawal",
   "/user/e-pin": "E-pin",
   "/shopping": "Shopping",
   "/tools": "Tools",

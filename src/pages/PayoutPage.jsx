@@ -247,7 +247,7 @@ export const PayoutPage = () => {
               <div className="mb-4 sm:mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
                 <div>
                   <h1 className="text-[17px] sm:text-[19px] font-medium text-gray-700">
-                    Payout Management
+                  Withdrawal Management
                   </h1>
                   <p className="text-[12px] sm:text-[13px] text-gray-500 tracking-wide">
                     Manage your withdrawal requests and payout history
@@ -259,7 +259,7 @@ export const PayoutPage = () => {
                   className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-sm font-medium bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-200 shadow-sm cursor-pointer"
                 >
                   <IndianRupeeIcon className="w-4 h-4" />
-                  Request Payout
+                  Request Withdrawal
                 </button>
               </div>
 
@@ -395,7 +395,7 @@ export const PayoutPage = () => {
                       {/* Header */}
                       <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-bold text-gray-900">
-                          Payout Request
+                          Withdrawal Request
                         </h2>
                         <button
                           onClick={() => setShowPayoutSlider(false)}
@@ -486,7 +486,7 @@ export const PayoutPage = () => {
                             <span className="text-gray-900">₹ 26.54</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
-                            <span className="text-gray-600">Payout Method</span>
+                            <span className="text-gray-600">Withdrawal Method</span>
                             <span className="text-gray-900">Bank Transfer</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
@@ -509,19 +509,19 @@ export const PayoutPage = () => {
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
-                              Payout Request Validity Days
+                            Withdrawal Request Validity Days
                             </span>
                             <span className="text-gray-900">-</span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
-                            <span className="text-gray-600">Payout Fee</span>
+                            <span className="text-gray-600">Withdrawal Fee</span>
                             <span className="text-purple-600 font-medium">
                               0 %
                             </span>
                           </div>
                           <div className="flex justify-between border-b border-gray-300 pb-1">
                             <span className="text-gray-600">
-                              Payout Fee Mode
+                            Withdrawal Fee Mode
                             </span>
                             <span className="text-gray-900">Percentage</span>
                           </div>

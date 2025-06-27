@@ -18,7 +18,7 @@ import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 
 // E-Wallet Page Component
-export const EpinPage = () => {
+export const PromoterPlanPage = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("ewallet");
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
@@ -289,4 +289,4 @@ export const EpinPage = () => {
   );
 };
 
-export default EpinPage;
+export default PromoterPlanPage;

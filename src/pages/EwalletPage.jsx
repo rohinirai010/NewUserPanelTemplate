@@ -11,14 +11,14 @@ import {
 import { DataTable } from "../components/BinarySoftwareCommonComponents/DataTable";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import EpinPage from "./EpinPage";
+import EpinPage from "./PromoterPlanPage";
 
 // E-Wallet Page Component
 export const EWalletPage = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("ewallet");
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
-  const [activeWalletTab, setActiveWalletTab] = useState("e-wallet"); // e-wallet or e-pin
+  const [activeWalletTab, setActiveWalletTab] = useState("e-wallet"); // e-wallet or plan
   const [activeTab, setActiveTab] = useState("statement"); // statement, transfer-history, my-earnings
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -44,7 +44,7 @@ export const EWalletPage = () => {
     {
       id: 1,
       date: "25 Mar 2025 15:43:15",
-      description: "E-pin refunded",
+      description: "plan refunded",
       amount: 100.0,
       type: "credit",
       transactionId: "TXN001",
@@ -53,7 +53,7 @@ export const EWalletPage = () => {
     {
       id: 2,
       date: "25 Mar 2025 15:43:14",
-      description: "E-pin refunded",
+      description: "plan refunded",
       amount: 100.0,
       type: "credit",
       transactionId: "TXN002",
@@ -62,7 +62,7 @@ export const EWalletPage = () => {
     {
       id: 3,
       date: "25 Mar 2025 15:43:12",
-      description: "E-pin refunded",
+      description: "plan refunded",
       amount: 100.0,
       type: "credit",
       transactionId: "TXN003",
@@ -71,7 +71,7 @@ export const EWalletPage = () => {
     {
       id: 4,
       date: "25 Mar 2025 15:43:11",
-      description: "E-pin refunded",
+      description: "plan refunded",
       amount: 100.0,
       type: "credit",
       transactionId: "TXN004",
@@ -553,14 +553,14 @@ export const EWalletPage = () => {
                   E-Wallet
                 </button>
                 <button
-                  onClick={() => setActiveWalletTab("e-pin")}
+                  onClick={() => setActiveWalletTab("plan")}
                   className={`px-3 py-1 text-sm font-medium rounded-2xl transition-all duration-200 cursor-pointer ${
-                    activeWalletTab === "e-pin"
+                    activeWalletTab === "plan"
                       ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-sm"
                       : "text-gray-600 hover:text-gray-800"
                   }`}
                 >
-                  E-pin
+                  Promoter Plan
                 </button>
               </div>
 
@@ -844,8 +844,8 @@ export const EWalletPage = () => {
                 </>
               )}
 
-              {/* E-Pin Section Placeholder */}
-              {activeWalletTab === "e-pin" && <EpinPage />}
+              {/* plan Section Placeholder */}
+              {activeWalletTab === "plan" && <EpinPage />}
 
               {/* Fund Transfer Slider */}
               {showTransferSlider && (

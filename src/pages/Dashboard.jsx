@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [hoveredPoint, setHoveredPoint] = useState(null);
   const [hoveredPayout, setHoveredPayout] = useState(null);
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
-  const { user } = useSelector(state => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -25,12 +25,18 @@ const Dashboard = () => {
 
   // data
   const userData = {
-    name: user?.fullName || '',
-    id: user?.username || '',
-    membershipPack: user?.membershipPack || '',
+    name: user?.fullName || "",
+    id: user?.username || "",
+    membershipPack: user?.membershipPack || "",
     personalUnit: user?.personalUnit || 0,
     groupUnit: user?.groupUnit || 0,
-    sponsor: user?.sponsorId || '',
+    sponsor: user?.sponsorId || "",
+  };
+
+  const teamOverviewData = {
+    current: { left: 0, right: 15 },
+    carryForward: { left: 5, right: 0 },
+    paid: { left: 10, right: 10 },
   };
 
   const statsData = {
@@ -274,13 +280,16 @@ const Dashboard = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-2  lg:grid-cols-4 gap-2 md:gap-6 mb-3 md:mb-4">
               {stats.map((stat, index) => (
-                <div key={index} className="bg-white rounded-lg p-2 sm:p-3 shadow-sm">
+                <div
+                  key={index}
+                  className="bg-white rounded-lg p-2 sm:p-3 shadow-sm"
+                >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-[11px] font-medium text-gray-600 mb-1">
                         {stat.label}
                       </p>
-                      <p className="text-[15px] font-bold text-gray-900">
+                      <p className="text-[19px] font-bold text-gray-900">
                         {stat.value}
                       </p>
                     </div>
@@ -305,7 +314,6 @@ const Dashboard = () => {
                             ? "text-purple-600"
                             : "text-teal-600"
                         }`}
-                        
                       />
                     </div>
                   </div>
@@ -764,9 +772,101 @@ const Dashboard = () => {
               </div>
             </div>
 
+            {/* Team Overview */}
+            <div className="pt-2 pb-4 border-b">
+        <h3 className="text-[14px] font-semibold mb-2">TEAM OVERVIEW</h3>
+
+        {/* Header Row */}
+        <div className="grid grid-cols-2 gap-4 pb-2 border-b border-gray-200">
+          <div className="text-left">
+            <span className="text-[11px] lg:text-[10px] xl:text-[11px] text-gray-500 font-semibold uppercase tracking-wider">
+              Particular
+            </span>
+          </div>
+          <div className="flex flex-row items-end justify-end gap-8 lg:gap-3 xl:gap-8">
+
+          <div className="text-center">
+            <span className="text-[11px] lg:text-[10px] xl:text-[11px] text-blue-600 font-semibold uppercase tracking-wider">
+              Left
+            </span>
+          </div>
+          <div className="text-center">
+            <span className="text-[11px] lg:text-[10px] xl:text-[11px] text-green-600 font-semibold uppercase tracking-wider">
+              Right
+            </span>
+          </div>
+          </div>
+        </div>
+
+        {/* Data Rows */}
+        <div className="space-y-0">
+          {/* Current Row */}
+          <div className="grid grid-cols-2 gap-4 py-1.5 xl:py-2 hover:bg-gray-50 transition-colors duration-150">
+            <div className="text-left">
+              <span className="text-[13px] lg:text-[11.5px] xl:text-[13px] text-gray-700 font-medium">Current</span>
+            </div>
+
+            <div className="flex flex-row items-end justify-end gap-8 lg:gap-3 xl:gap-8">
+
+            <div className="text-center">
+              <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-blue-600 bg-blue-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">
+                {teamOverviewData.current.left}
+              </span>
+            </div>
+            <div className="text-center">
+              <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-green-600 bg-green-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">
+                {teamOverviewData.current.right}
+              </span>
+            </div>
+            </div>
+          </div>
+
+          {/* Carry Forward Row */}
+          <div className="grid grid-cols-2 gap-4 py-1.5 xl:py-2 hover:bg-gray-50 transition-colors duration-150 border-t border-gray-100">
+            <div className="text-left">
+              <span className="text-[13px] lg:text-[11px] xl:text-[13px] text-gray-700 font-medium">Carry Forward</span>
+            </div>
+
+            <div className="flex flex-row items-end justify-end gap-8 lg:gap-3 xl:gap-8">
+
+            <div className="text-center">
+              <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-blue-600 bg-blue-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">
+                {teamOverviewData.carryForward.left}
+              </span>
+            </div>
+            <div className="text-center">
+              <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-green-600 bg-green-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">
+                {teamOverviewData.carryForward.right}
+              </span>
+            </div>
+            </div>
+          </div>
+
+          {/* Paid Row */}
+          <div className="grid grid-cols-2 gap-4 py-1.5 xl:py-2 hover:bg-gray-50 transition-colors duration-150 border-t border-gray-100">
+            <div className="text-left">
+              <span className="text-[13px] lg:text-[11.5px] xl:text-[13px] text-gray-700 font-medium">Paid</span>
+            </div>
+            <div className="flex flex-row items-end justify-end gap-8 lg:gap-3 xl:gap-8">
+
+            <div className="text-center">
+              <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-blue-600 bg-blue-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">
+                {teamOverviewData.paid.left}
+              </span>
+            </div>
+            <div className="text-center">
+              <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-green-600 bg-green-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">
+                {teamOverviewData.paid.right}
+              </span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
             {/* Payout Overview */}
-            <div className="pt-4">
-              <h3 className="text-[15px] font-semibold mb-2">
+            <div className="pt-3">
+              <h3 className="text-[14px] font-semibold mb-2">
                 PAYOUT OVERVIEW
               </h3>
 
@@ -839,7 +939,7 @@ const Dashboard = () => {
                         {hoveredPayout ? hoveredPayout.type : "Total"}
                       </div>
                       <div className="text-xl font-bold">
-                      ₹
+                        ₹
                         {hoveredPayout
                           ? hoveredPayout.value.toFixed(2)
                           : totalPayout.toFixed(2)}
@@ -887,39 +987,6 @@ const Dashboard = () => {
 
               <div className="text-center mb-4">
                 <h4 className="font-semibold text-lg">Payout</h4>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
-                  <span className="text-sm flex items-center">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                    Requested
-                  </span>
-                  <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs">
-                  ₹{payoutData.requested}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center p-2">
-                  <span className="text-sm">Approved</span>
-                  <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs">
-                  ₹{payoutData.approved}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center p-2 bg-green-50 rounded">
-                  <span className="text-sm flex items-center">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                    Paid
-                  </span>
-                  <span className="bg-green-600 text-white px-2 py-1 rounded text-xs">
-                  ₹{payoutData.paid}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center p-2">
-                  <span className="text-sm">Rejected</span>
-                  <span className="bg-red-600 text-white px-2 py-1 rounded text-xs">
-                  ₹{payoutData.rejected}
-                  </span>
-                </div>
               </div>
             </div>
           </div>

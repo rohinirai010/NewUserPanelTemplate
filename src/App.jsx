@@ -19,7 +19,7 @@ import Home from "./pages/MainWebsitePages/Home";
 import NetworksPage from "./pages/Networks";
 import PayoutPage from "./pages/PayoutPage";
 import EWalletPage from "./pages/EwalletPage";
-import EpinPage from "./pages/EpinPage";
+import PromoterPlanPage from "./pages/PromoterPlanPage";
 
 function App() {
   const location = useLocation();
@@ -78,8 +78,8 @@ function App() {
         <Route exact path="/user/welcome" element={<Welcome />} />
         <Route exact path="/user/networks" element={<NetworksPage />} />
         <Route exact path="/user/e-wallet" element={<EWalletPage />} />
-        <Route exact path="/user/e-pin" element={<EpinPage />} />
-        <Route exact path="/user/payout" element={<PayoutPage />} />
+        <Route exact path="/user/plan" element={<PromoterPlanPage />} />
+        <Route exact path="/user/withdrawal" element={<PayoutPage />} />
       </Routes>
     </>
   );

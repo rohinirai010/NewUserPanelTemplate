@@ -3,7 +3,6 @@ import {
   Home,
   UserPlus,
   Wallet,
-  DollarSign,
   Zap,
   ShoppingCart,
   Settings,
@@ -12,6 +11,7 @@ import {
   Network,
   ChevronsRight,
   ChevronsLeft,
+  IndianRupeeIcon,
 } from "lucide-react";
 import sidebarLogo from "../images/AuthLogo.png";
 import { Link } from "react-router-dom";
@@ -37,7 +37,7 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
     },
     { icon: UserPlus, label: "Register", id: "register", link: "/user/register" },
     { icon: Wallet, label: "E-Wallet", id: "ewallet", link: "/user/e-wallet" },
-    { icon: DollarSign, label: "Payout", id: "payout", link: "/user/payout" },
+    { icon: IndianRupeeIcon, label: "Withdrawal", id: "payout", link: "/user/withdrawal" },
     { icon: Zap, label: "E-pin", id: "epin", link: "/user/e-pin" },
     { icon: ShoppingCart, label: "Shopping", id: "shopping", link: "/shopping" },
     { 
@@ -60,6 +60,10 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
       [itemLabel]: !prev[itemLabel],
     }));
   };
+
+  console.log("Current activeItem:", activeItem);
+
+
 
   const handleItemClick = (item, e) => {
     e.preventDefault();
