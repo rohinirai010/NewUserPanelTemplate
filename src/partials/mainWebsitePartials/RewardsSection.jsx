@@ -87,7 +87,7 @@ const RewardsSection = () => {
       <img
         src={rewardSectionBgSpot}
         alt=""
-        className="absolute -z-10 top-8 animate-pulse"
+        className="absolute -z-10 top-[45%] sm:top-8 md:animate-pulse"
       />
       
       {/* Floating particles animation */}

@@ -1,5 +1,5 @@
 import React from "react";
-import mainLogo from "../../images/mainWebsiteImages/mainWebsiteLogo.png";
+import mainLogo from "../../images/AuthLogo.png";
 import instaIcon from "../../images/mainWebsiteImages/instaIcon.svg"
 import facebookIcon from "../../images/mainWebsiteImages/facebookIcon.svg"
 import linkedinIcon from "../../images/mainWebsiteImages/linkedinIcon.svg"
@@ -11,7 +11,7 @@ const Footer = () => {
     <>
       <div
         className="px-6 sm:px-8 md:px-10 lg:px-20 xl:px-30 pt-10 pb-6 relative overflow-hidden"
-        style={{ background: "var(--color-accent)" }}
+        style={{ background: "var(--color-dark)" }}
       >
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-5">
@@ -25,19 +25,19 @@ const Footer = () => {
           <img
             src={mainLogo}
             alt="Main Logo"
-            className="w-[7rem] sm:w-[10rem] md:w-[10rem] h-5 md:h-8 hover:scale-110 transition-transform duration-300 ease-out"
+            className="w-[7rem] sm:w-[9rem] h-14 sm:h-16 hover:scale-110 transition-transform duration-300 ease-out"
           />
 
           {/* social media section */}
           <div className="flex flex-row gap-3">
-            <div className="bg-gray-400 p-2 rounded-full hover:bg-pink-900 transition-all duration-300 hover:scale-110 hover:rotate-12 cursor-pointer transform">
-              <img src={instaIcon} alt="" className="w-4 h-4" />
+            <div className="bg-gray-400 p-1.5 sm:p-2 rounded-full hover:bg-pink-900 transition-all duration-300 hover:scale-110 hover:rotate-12 cursor-pointer transform">
+              <img src={instaIcon} alt="" className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
             </div>
-            <div className="bg-gray-400 p-2 rounded-full hover:bg-blue-600 transition-all duration-300 hover:scale-110 hover:rotate-12 cursor-pointer transform" style={{ animationDelay: '0.1s' }}>
-              <img src={facebookIcon} alt="" className="w-4 h-4" />
+            <div className="bg-gray-400 p-1.5 sm:p-2 rounded-full hover:bg-blue-600 transition-all duration-300 hover:scale-110 hover:rotate-12 cursor-pointer transform" style={{ animationDelay: '0.1s' }}>
+              <img src={facebookIcon} alt="" className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
             </div>
-            <div className="bg-gray-400 p-2 rounded-full hover:bg-blue-300 transition-all duration-300 hover:scale-110 hover:rotate-12 cursor-pointer transform" style={{ animationDelay: '0.2s' }}>
-              <img src={linkedinIcon} alt="" className="w-4 h-4" />
+            <div className="bg-gray-400 p-1.5 sm:p-2 rounded-full hover:bg-blue-300 transition-all duration-300 hover:scale-110 hover:rotate-12 cursor-pointer transform" style={{ animationDelay: '0.2s' }}>
+              <img src={linkedinIcon} alt="" className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           {/* Download App Section */}
-          <div className="bg-blue-900/40 backdrop-blur-sm rounded-4xl p-8 max-w-md hover:bg-blue-900/50 transition-all duration-500  hover:shadow-2xl transform animate-fade-in-right">
+          <div className="bg-[#E20C88]/10 backdrop-blur-xs rounded-4xl p-8 max-w-md hover:bg-[#E20C88]/20 transition-all duration-500  hover:shadow-2xl transform animate-fade-in-right">
             <h3 className="text-white text-lg font-semibold mb-3 hover:text-gray-200 transition-colors duration-300">DOWNLOAD OUR APPLICATION</h3>
             <p className="text-gray-300 text-sm mb-6 leading-relaxed hover:text-gray-200 transition-colors duration-300">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nulla integer
@@ -83,7 +83,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-12 pt-6 border-t border-gray-600 relative z-10 animate-fade-in-up">
+        <div className="mt-12 pt-6 border-t border-gray-500 relative z-10 animate-fade-in-up">
           <p className="text-gray-400 text-sm hover:text-gray-300 transition-colors duration-300">All rights reserved</p>
         </div>
 

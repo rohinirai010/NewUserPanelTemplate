@@ -21,7 +21,7 @@ const MiddleSection = () => {
       <img
         src={middleSectionBgSpot}
         alt=""
-        className="hidden md:block absolute -z-10 -top-8 -right-10 sm:right-0 w-[60rem] animate-pulse "
+        className="absolute -z-10 top-28 md:-top-8  right-0 sm:w-[60rem]  "
       />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 md:gap-y-4 xl:gap-y-6 md:gap-x-4 xl:gap-x-6 mt-12 md:mt-18">
         <div className="grid grid-cols-1 gap-y-6 md:gap-y-4 xl:gap-y-6 animate-fade-in-left">

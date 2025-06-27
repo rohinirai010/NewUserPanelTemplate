@@ -131,7 +131,7 @@ const ReviewSection = () => {
       <img
         src={middleSectionBgSpot}
         alt=""
-        className="hidden md:block absolute -z-10 -top-8 left-0 w-[60rem] animate-pulse "
+        className="absolute -z-10 top-58 md:-top-8 left-0 w-[60rem]  "
       />
 
       {/* Three Cards Display with Center Focus */}

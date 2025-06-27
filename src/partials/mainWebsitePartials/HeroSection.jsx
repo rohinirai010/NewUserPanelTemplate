@@ -7,6 +7,7 @@ import {
   PrimaryButton,
   TertiaryButton,
 } from "../../components/MainWebsiteComponents/ButtonsComponent";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,6 +15,7 @@ const HeroSection = () => {
   const [buttonAnimation, setButtonAnimation] = useState(false);
   const [imageAnimation, setImageAnimation] = useState(false);
   const [featuredAnimation, setFeaturedAnimation] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer1 = setTimeout(() => setIsVisible(true), 100);
