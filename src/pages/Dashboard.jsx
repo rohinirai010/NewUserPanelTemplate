@@ -847,7 +847,7 @@ const Dashboard = () => {
             <div className="text-left">
               <span className="text-[13px] lg:text-[11.5px] xl:text-[13px] text-gray-700 font-medium">Paid</span>
             </div>
-            <div className="flex flex-row items-end justify-end gap-8 lg:gap-3 xl:gap-8">
+            <div className="flex flex-row items-end justify-end gap-8 lg:gap-3 xl:gap-6.5">
 
             <div className="text-center">
               <span className="text-[13px] lg:text-[12px] xl:text-[13px] font-bold text-blue-600 bg-blue-50 px-3 lg:px-2 xl:px-3 py-1 rounded-md">

@@ -234,7 +234,7 @@ export const PayoutPage = () => {
 
           {/* Payout Content */}
           <main className="flex-1 overflow-auto px-4 py-2 relative lg:ml-20">
-            <div className="max-w-7xl mx-auto">
+            <div className="w-full mx-auto">
               {/* Success Message */}
               {showSuccessMessage && (
                 <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 text-[12px] sm:text-base rounded-lg shadow-lg z-50 flex items-center gap-2">

@@ -38,7 +38,7 @@ const Sidebar = ({ isExpanded, setIsExpanded, activeItem, setActiveItem }) => {
     { icon: UserPlus, label: "Register", id: "register", link: "/user/register" },
     { icon: Wallet, label: "E-Wallet", id: "ewallet", link: "/user/e-wallet" },
     { icon: IndianRupeeIcon, label: "Withdrawal", id: "payout", link: "/user/withdrawal" },
-    { icon: Zap, label: "E-pin", id: "epin", link: "/user/e-pin" },
+    { icon: Zap, label: "Promoter Plan", id: "ewallet", link: "/user/e-wallet" },
     { icon: ShoppingCart, label: "Shopping", id: "shopping", link: "/shopping" },
     { 
       icon: Settings, 
